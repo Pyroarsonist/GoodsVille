@@ -1,0 +1,10 @@
+sequenceDiagram
+    User->>Room: User joins a room
+    loop Bidding process
+        User-->>Room: New higher bet arrives
+        Room-->>User: Bet returns to user
+Note over User,Room: Bet money value held by system<br/>before lot is closed
+        Room->>Room: Bet is closed when there were no bets for some time
+    end
+    Note right of Room: If no bets put, then<br/>auction is postponed<br/>after some time
+    Room->>User: Now lot is obtained by user!
