@@ -1,4 +1,5 @@
 classDiagram
+User <|-- UserSession
 User <|-- Lot
 
 Lot <|-- Bet
@@ -8,6 +9,10 @@ Lot --* Room
 
 User <|-- RoomToUser
 Room <|-- RoomToUser
+
+User <|-- NotificationToUser
+Notification <|-- NotificationToUser
+
 User : int id
 User : varchar(128) password
 User : numeric balance
@@ -16,6 +21,13 @@ User : varchar(128) fullName
 User : varchar(64) email
 User : timestamp createdAt
 User : timestamp updatedAt
+
+UserSession : bigint id
+UserSession : int userId
+UserSession : boolean active
+UserSession : timestamp expiresAt
+UserSession : timestamp createdAt
+UserSession : timestamp updatedAt
 
 Lot : int id
 Lot : int ownerId
@@ -45,9 +57,21 @@ Room : timestamp endedAt
 Room : timestamp createdAt
 Room : timestamp updatedAt
 
-RoomToUser: int id
+RoomToUser : int id
 RoomToUser : int userId
 RoomToUser : int roomId
 RoomToUser : boolean involved
 RoomToUser : timestamp createdAt
 RoomToUser : timestamp updatedAt
+
+Notification : int id
+Notification : varchar(128) message
+Notification : varchar(16) level
+Notification : timestamp createdAt
+
+NotificationToUser : int id
+NotificationToUser : int userId
+NotificationToUser : int notificationId
+NotificationToUser : boolean checked
+NotificationToUser : timestamp createdAt
+NotificationToUser : timestamp updatedAt
