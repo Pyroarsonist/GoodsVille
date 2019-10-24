@@ -1,0 +1,29 @@
+graph LR
+    gcl(GraphQL)
+     subgraph Frontend
+        rd["Redux"]
+        r["React"]
+        ap["Apollo"]
+        r-->rd
+        ap-->r
+        wp(Webpack)
+        end
+    subgraph Backend
+        exp(Express)
+        nodejs(NodeJS)
+
+        pg["Postgres"]
+        node1((Node 1))
+        node2((Node 2))
+        node3((Node 3))
+        noden((Another nodes))
+        node1 --> pg
+        node2 --> pg
+        node3 --> pg
+        noden --> pg
+    end
+    node1 --> gcl
+    node2 .-> gcl
+    node3 .-> gcl
+    noden .-> gcl
+    gcl --> ap
