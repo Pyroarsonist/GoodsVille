@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.13",
@@ -19,6 +20,7 @@
     "apollo-server-express": "^2.9.7",
     "bluebird": "^3.7.1",
     "body-parser": "^1.19.0",
+    "bootstrap-css-only": "^4.3.1",
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.4",
     "core-js": "^3.3.4",
@@ -35,7 +37,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
-    "normalize.css": "^8.0.1",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "pg": "^7.12.1",
