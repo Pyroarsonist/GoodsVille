@@ -89,6 +89,7 @@ module.exports = {
     // project rules
     'react/static-property-placement': 0,
     'react/destructuring-assignment': 0,
+    'arrow-body-style': ['error', 'as-needed'],
   },
 
   settings: {
