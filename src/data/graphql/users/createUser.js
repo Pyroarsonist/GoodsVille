@@ -1,5 +1,3 @@
-import { User, UserProfile } from 'data/models';
-
 export const schema = [
   `
   # User profile data for creating a new local database user account
@@ -37,29 +35,8 @@ export const mutation = [
 
 export const resolvers = {
   Mutation: {
-    async databaseCreateUser(parent, args) {
-      // If user already exists, throw error
-      const lookupUser = await User.findOne({ where: { email: args.email } });
-
-      if (lookupUser) {
-        // eslint-disable-next-line no-throw-literal
-        throw 'User already exists!';
-      }
-
-      // Create new user with profile in database
-      const user = await User.create(
-        {
-          email: args.email,
-          profile: {
-            ...args.profile,
-          },
-        },
-        {
-          include: [{ model: UserProfile, as: 'profile' }],
-        },
-      );
-
-      return user;
+    async databaseCreateUser() {
+      throw Error('User was not created');
     },
   },
 };
