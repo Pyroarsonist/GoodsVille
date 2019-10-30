@@ -11,111 +11,82 @@ import UserSession from './UserSession';
 User.hasMany(Bet, {
   foreignKey: 'userId',
   as: 'bets',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
 });
 
 Bet.belongsTo(User, {
   foreignKey: 'userId',
-  as: 'ownerBet',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'owner',
 });
 
 User.hasOne(UserSession, {
   foreignKey: 'userId',
   as: 'session',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
-});
-
-UserSession.belongsTo(User, {
-  foreignKey: 'userId',
-  as: 'session',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
 });
 
 User.hasMany(Lot, {
   foreignKey: 'ownerId',
-  as: 'ownedLots',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'lots',
 });
 
 Lot.belongsTo(User, {
   foreignKey: 'ownerId',
-  as: 'ownerLot',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'owner',
 });
 
 User.hasMany(Lot, {
   foreignKey: 'purchaserId',
-  as: 'purchasedLots',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'lots',
 });
 
 Lot.belongsTo(User, {
   foreignKey: 'purchaserId',
-  as: 'purchaserLot',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'purchaser',
 });
 
 Lot.hasMany(Bet, {
   foreignKey: 'lotId',
   as: 'bets',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
 });
 
 Bet.belongsTo(Lot, {
   foreignKey: 'lotId',
-  as: 'bet',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'lot',
 });
 
 Room.hasOne(Lot, {
   foreignKey: 'roomId',
   as: 'lot',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
 });
 
 Lot.belongsTo(Room, {
   foreignKey: 'roomId',
-  as: 'lot',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+  as: 'room',
 });
 
 User.belongsToMany(Notification, {
   through: NotificationToUser,
-  as: 'users',
+  as: 'notifications',
   foreignKey: 'userId',
   otherKey: 'notificationId',
 });
 
 Notification.belongsToMany(User, {
   through: NotificationToUser,
-  as: 'notifications',
+  as: 'users',
   foreignKey: 'notificationId',
   otherKey: 'userId',
 });
 
 User.belongsToMany(Room, {
   through: RoomToUser,
-  as: 'users',
+  as: 'rooms',
   foreignKey: 'userId',
   otherKey: 'roomId',
 });
 
 Room.belongsToMany(User, {
   through: RoomToUser,
-  as: 'rooms',
+  as: 'users',
   foreignKey: 'roomId',
   otherKey: 'userId',
 });
