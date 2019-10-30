@@ -1,8 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const RoomToUser = Model.define('roomToUser', {
-  // attributes
+const RoomToUser = Model.define('RoomToUser', {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,

@@ -1,8 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Bet = Model.define('bet', {
-  // attributes
+const Bet = Model.define('Bet', {
   id: {
     type: DataType.BIGINT,
     primaryKey: true,

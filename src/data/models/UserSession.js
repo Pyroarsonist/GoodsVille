@@ -1,8 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const UserSession = Model.define('userSession', {
-  // attributes
+const UserSession = Model.define('UserSession', {
   id: {
     type: DataType.BIGINT,
     primaryKey: true,

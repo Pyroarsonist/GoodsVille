@@ -1,8 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const Notification = Model.define('notification', {
-  // attributes
+const Notification = Model.define('Notification', {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,

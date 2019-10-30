@@ -1,8 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const NotificationToUser = Model.define('notificationToUser', {
-  // attributes
+const NotificationToUser = Model.define('NotificationToUser', {
   id: {
     type: DataType.BIGINT,
     primaryKey: true,
