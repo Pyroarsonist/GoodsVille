@@ -15,6 +15,13 @@ User.hasMany(Bet, {
   onDelete: 'cascade',
 });
 
+Bet.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'ownerBet',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
 User.hasOne(UserSession, {
   foreignKey: 'userId',
   as: 'session',
@@ -22,32 +29,96 @@ User.hasOne(UserSession, {
   onDelete: 'cascade',
 });
 
-User.hasMany(Lot, {
+UserSession.belongsTo(User, {
   foreignKey: 'userId',
-  as: 'lots',
+  as: 'session',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+User.hasMany(Lot, {
+  foreignKey: 'ownerId',
+  as: 'ownedLots',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+Lot.belongsTo(User, {
+  foreignKey: 'ownerId',
+  as: 'ownerLot',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+User.hasMany(Lot, {
+  foreignKey: 'purchaserId',
+  as: 'purchasedLots',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+Lot.belongsTo(User, {
+  foreignKey: 'purchaserId',
+  as: 'purchaserLot',
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
 
 Lot.hasMany(Bet, {
-  foreignKey: 'id',
-  as: 'betPerLot',
+  foreignKey: 'lotId',
+  as: 'bets',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+Bet.belongsTo(Lot, {
+  foreignKey: 'lotId',
+  as: 'bet',
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
 
 Room.hasOne(Lot, {
-  foreignKey: 'id',
-  as: 'lotInRoom',
+  foreignKey: 'roomId',
+  as: 'lot',
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
 
-User.belongsToMany(Notification, { through: NotificationToUser });
-Notification.belongsToMany(User, { through: NotificationToUser });
+Lot.belongsTo(Room, {
+  foreignKey: 'roomId',
+  as: 'lot',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
 
-User.belongsToMany(Room, { through: RoomToUser });
-Room.belongsToMany(User, { through: RoomToUser });
+User.belongsToMany(Notification, {
+  through: NotificationToUser,
+  as: 'users',
+  foreignKey: 'userId',
+  otherKey: 'notificationId',
+});
+
+Notification.belongsToMany(User, {
+  through: NotificationToUser,
+  as: 'notifications',
+  foreignKey: 'notificationId',
+  otherKey: 'userId',
+});
+
+User.belongsToMany(Room, {
+  through: RoomToUser,
+  as: 'users',
+  foreignKey: 'userId',
+  otherKey: 'roomId',
+});
+
+Room.belongsToMany(User, {
+  through: RoomToUser,
+  as: 'rooms',
+  foreignKey: 'roomId',
+  otherKey: 'userId',
+});
 
 function sync(...args) {
   return sequelize.sync(...args);
