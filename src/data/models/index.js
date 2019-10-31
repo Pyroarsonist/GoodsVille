@@ -25,7 +25,7 @@ User.hasOne(UserSession, {
 
 User.hasMany(Lot, {
   foreignKey: 'ownerId',
-  as: 'lots',
+  as: 'ownerLots',
 });
 
 Lot.belongsTo(User, {
@@ -35,7 +35,7 @@ Lot.belongsTo(User, {
 
 User.hasMany(Lot, {
   foreignKey: 'purchaserId',
-  as: 'lots',
+  as: 'purchaserLots',
 });
 
 Lot.belongsTo(User, {
