@@ -1,16 +1,16 @@
 import React from 'react';
 import Layout from 'components/Layout';
-import Register from './Register';
+import Signup from './Signup';
 
 const title = 'Registration';
 
 function action() {
   return {
-    chunks: ['register'],
+    chunks: ['signup'],
     title,
     component: (
       <Layout>
-        <Register title={title} />
+        <Signup title={title} />
       </Layout>
     ),
   };

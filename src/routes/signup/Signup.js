@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/withStyles';
+import cx from 'classnames';
 import history from 'core/history';
-import loginMutation from './login.graphql';
-import s from './Login.css';
+import s from './Signup.css';
+import signupMutation from './signup.graphql';
 
-function Login({ title }) {
+function Signup({ title }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordDuplicate, setPasswordDuplicate] = useState('');
 
-  const [login] = useMutation(loginMutation, {
+  const [signup] = useMutation(signupMutation, {
     variables: {
       email,
       password,
@@ -19,7 +21,7 @@ function Login({ title }) {
 
   const handleSubmit = async () => {
     try {
-      await login();
+      await signup();
       // redirect to page
       history.push('/rooms');
     } catch (e) {
@@ -37,7 +39,8 @@ function Login({ title }) {
             Username or email address:
             <input
               className={s.input}
-              type="text"
+              type="email"
+              // autoFocus
               placeholder="Email address"
               onChange={e => setEmail(e.target.value)}
             />
@@ -55,6 +58,23 @@ function Login({ title }) {
           </div>
         </div>
         <div className={s.formGroup}>
+          <div className={s.label}>
+            Confirm password:
+            <input
+              className={cx(
+                s.input,
+                'border',
+                password && password === passwordDuplicate
+                  ? 'border-success'
+                  : 'border-danger',
+              )}
+              type="password"
+              placeholder="Confirm password"
+              onChange={e => setPasswordDuplicate(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className={s.formGroup}>
           <button className={s.button} type="button" onClick={handleSubmit}>
             Log in
           </button>
@@ -64,8 +84,8 @@ function Login({ title }) {
   );
 }
 
-Login.propTypes = {
+Signup.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default withStyles(s)(Login);
+export default withStyles(s)(Signup);

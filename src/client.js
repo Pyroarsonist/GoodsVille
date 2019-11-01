@@ -9,7 +9,7 @@ import App from './components/App';
 import createFetch from './createFetch';
 import configureStore from './store/configureStore';
 import { updateMeta } from './DOMUtils';
-import history from './history';
+import history from './core/history';
 import createApolloClient from './core/createApolloClient';
 import router from './router';
 

@@ -12,7 +12,7 @@ passport.serializeUser((user, done) => {
 
 strategyInit(passport);
 
-const router = routerInit(passport);
+const router = routerInit();
 
 export async function deserializeUser(req, res, next) {
   const data = req.user;

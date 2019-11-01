@@ -1,13 +1,11 @@
 import { Router } from 'express';
 import debugHandler from 'debug';
 import config from 'config';
-import registerMiddleware, {
-  encodeUserMiddleware as encodeUser,
-} from './middleware';
+import registerMiddleware from './middleware';
 
 const debug = debugHandler('goodsville:auth');
 
-export default passport => {
+export default () => {
   const router = Router();
 
   router.use(registerMiddleware);
@@ -18,9 +16,6 @@ export default passport => {
     if (req.session) req.session.destroy();
     res.redirect('/');
   });
-
-  router.post('/login', passport.authenticate('local'), encodeUser);
-  router.post('/register', passport.authenticate('local-signup'), encodeUser);
 
   router.use((err, req, res, next) => {
     debug('Error occured when using auth route\n%O', err);
