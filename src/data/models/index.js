@@ -53,14 +53,14 @@ Bet.belongsTo(Lot, {
   as: 'lot',
 });
 
-Room.hasOne(Lot, {
-  foreignKey: 'roomId',
-  as: 'lot',
+Lot.hasOne(Room, {
+  foreignKey: 'lotId',
+  as: 'room',
 });
 
-Lot.belongsTo(Room, {
-  foreignKey: 'roomId',
-  as: 'room',
+Room.belongsTo(Lot, {
+  foreignKey: 'lotId',
+  as: 'lot',
 });
 
 User.belongsToMany(Notification, {

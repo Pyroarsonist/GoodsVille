@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
+import cookie from 'react-cookies';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import App from './components/App';
 import createFetch from './createFetch';
@@ -62,6 +63,8 @@ async function onLocationChange(location, action) {
   try {
     context.pathname = location.pathname;
     context.query = queryString.parse(location.search);
+
+    cookie.save('__lu_', location.pathname, { path: '/' });
 
     // Traverses the list of routes in the order they are defined until
     // it finds the first route that matches provided URL path string

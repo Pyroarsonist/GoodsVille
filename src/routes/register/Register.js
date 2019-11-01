@@ -1,32 +1,81 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/withStyles';
+import cx from 'classnames';
 import s from './Register.css';
 
-class Register extends React.Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
+function Register({ title }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordDuplicate, setPasswordDuplicate] = useState('');
+  const handleSubmit = async () => {
+    await fetch('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
   };
-
-  render() {
-    return (
-      <div className={s.root}>
-        <div className={s.container}>
-          <h1>{this.props.title}</h1>
-          <p>...</p>
-        </div>
+  return (
+    <div className={s.root}>
+      <div className={s.container}>
+        <h1>{title}</h1>
+        <p className={s.lead}>Log in with your e-mail</p>
+        <form onSubmit={handleSubmit}>
+          <div className={s.formGroup}>
+            <div className={s.label}>
+              Username or email address:
+              <input
+                className={s.input}
+                type="email"
+                // autoFocus
+                placeholder="Email address"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className={s.formGroup}>
+            <div className={s.label}>
+              Password:
+              <input
+                className={s.input}
+                type="password"
+                placeholder="Password"
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className={s.formGroup}>
+            <div className={s.label}>
+              Confirm password:
+              <input
+                className={cx(
+                  s.input,
+                  'border',
+                  password && password === passwordDuplicate
+                    ? 'border-success'
+                    : 'border-danger',
+                )}
+                type="password"
+                placeholder="Confirm password"
+                onChange={e => setPasswordDuplicate(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className={s.formGroup}>
+            <button className={s.button} type="submit">
+              Log in
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+Register.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default withStyles(s)(Register);
