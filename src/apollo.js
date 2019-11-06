@@ -1,11 +1,14 @@
 import { ApolloServer } from 'apollo-server-express';
 import schema from 'data/schema';
 import { buildContext } from 'graphql-passport';
-import { User } from 'data/models';
 
 const server = new ApolloServer({
   schema,
-  context: ({ req, res }) => buildContext({ req, res, User }),
+  context: ({ req, res }) =>
+    buildContext({
+      req,
+      res,
+    }),
   playground: __DEV__,
   formatError(err) {
     if (__DEV__) return err;

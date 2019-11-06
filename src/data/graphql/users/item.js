@@ -1,5 +1,4 @@
-import { User } from 'data/models';
-
+// eslint-disable-next-line import/prefer-default-export
 export const schema = [
   `
   type User {
@@ -8,17 +7,3 @@ export const schema = [
   }
 `,
 ];
-
-export const queries = [
-  `
-  user(email: String!): User
-`,
-];
-
-export const resolvers = {
-  RootQuery: {
-    async user(root, { email }) {
-      return User.findOne({ where: { email } });
-    },
-  },
-};
