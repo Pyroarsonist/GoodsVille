@@ -1,0 +1,8 @@
+stateDiagram
+    note left of all: Bid states
+    [*] --> Highest
+    Highest --> Successful
+    Highest --> Overbid
+    Overbid --> Failed
+    Failed --> [*]
+    Successful --> [*]
