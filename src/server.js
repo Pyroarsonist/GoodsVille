@@ -3,7 +3,6 @@ import Promise from 'bluebird';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import { graphql } from 'graphql';
 import nodeFetch from 'node-fetch';
 import React from 'react';
@@ -18,10 +17,8 @@ import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import createFetch from './createFetch';
-import passport, {
-  router as auth,
-  deserializeUser,
-} from './core/auth/passport';
+import passport from './core/auth/passport';
+import getSession from './core/auth/session';
 import router from './router';
 import models from './data/models';
 import schema from './data/schema';
@@ -60,31 +57,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//
-// Authentication
-// -----------------------------------------------------------------------------
-app.use(
-  expressJwt({
-    secret: config.auth.jwt.secret,
-    credentialsRequired: false,
-    getToken: req => req.cookies[config.auth.tokenName],
-  }),
-  deserializeUser,
-);
-// Error handler for express-jwt
-app.use((err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
-  if (err instanceof Jwt401Error) {
-    console.error('[express-jwt-error]', req.cookies[config.auth.tokenName]);
-    // `clearCookie`, otherwise user can't use web-app until cookie expires
-    res.clearCookie([config.auth.tokenName]);
-  }
-  next(err);
-});
-
+app.use(getSession());
 app.use(passport.initialize());
-
-app.use('/auth', auth);
+app.use(passport.session());
 
 ApolloServer.install(app);
 

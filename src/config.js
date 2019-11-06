@@ -30,5 +30,9 @@ module.exports = {
   auth: {
     jwt: { secret: process.env.JWT_SECRET || 'fict-is-73-na-meste' },
     tokenName: process.env.AUTH_TOKEN_NAME || '_tn_',
+    session: {
+      name: '_ss',
+      secret: 'SECreT_sEcssdon',
+    },
   },
 };
