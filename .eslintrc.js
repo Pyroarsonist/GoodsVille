@@ -90,6 +90,7 @@ module.exports = {
     'react/static-property-placement': 0,
     'react/destructuring-assignment': 0,
     'arrow-body-style': ['error', 'as-needed'],
+    radix: 'off',
   },
 
   settings: {

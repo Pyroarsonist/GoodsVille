@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from 'components/Layout';
-import Login from './Login';
+import Login from 'components/Login';
 
 const title = 'Login page';
 

@@ -1,4 +1,4 @@
-import createLotInstance from 'core/auction/createLot';
+import createLotInstance from 'core/auction/lots/createLot';
 
 export const schema = [
   `

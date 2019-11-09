@@ -1,4 +1,5 @@
-import { Lot, Room } from 'data/models';
+import { Lot, Room, Bet } from 'data/models';
+import closeLot from 'core/auction/lots/closeLot';
 
 export const schema = [
   `
@@ -13,6 +14,7 @@ export const schema = [
     owner: User!
     purchaser: User
     room: Room!
+    bets: [Bet!]!
   }
 `,
 ];
@@ -26,11 +28,19 @@ export const queries = [
 export const resolvers = {
   RootQuery: {
     async lot(root, { id }) {
+      await closeLot(id);
       return Lot.findByPk(id, {
-        include: {
-          model: Room,
-          as: 'room',
-        },
+        include: [
+          {
+            model: Room,
+            as: 'room',
+          },
+          {
+            model: Bet,
+            as: 'bets',
+            required: false,
+          },
+        ],
       });
     },
   },
