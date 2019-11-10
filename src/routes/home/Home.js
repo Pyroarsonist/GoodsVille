@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { compose } from 'redux';
-import withStyles from 'isomorphic-style-loader/withStyles';
-import s from './Home.css';
+import React from 'react';
+import Categories from 'components/Categories/Categories';
+import RoomList from 'components/RoomList';
 
-class Home extends Component {
-  render() {
-    return (
-      <div className={s.root}>
-        <div className={s.container}>
-          <h1>Home</h1>
-        </div>
+function Home() {
+  return (
+    <div className="d-flex ">
+      <div className="col-3">
+        <Categories />
       </div>
-    );
-  }
+      <div className="col-9">
+        <RoomList />
+      </div>
+    </div>
+  );
 }
 
-export default compose(withStyles(s))(Home);
+export default Home;
