@@ -11,10 +11,6 @@ const routes = {
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
     {
-      path: '/contact',
-      load: () => import(/* webpackChunkName: 'contact' */ './contact'),
-    },
-    {
       path: '/login',
       load: () => import(/* webpackChunkName: 'login' */ './login'),
     },
@@ -23,16 +19,25 @@ const routes = {
       load: () => import(/* webpackChunkName: 'signup' */ './signup'),
     },
     {
-      path: '/about',
-      load: () => import(/* webpackChunkName: 'about' */ './about'),
-    },
-    {
       path: '/privacy',
       load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
     },
     {
       path: '/admin',
       load: () => import(/* webpackChunkName: 'admin' */ './admin'),
+    },
+    {
+      path: '/rooms',
+      children: [
+        {
+          path: '',
+          load: () => import(/* webpackChunkName: 'room' */ './rooms'),
+        },
+        {
+          path: '/:roomId',
+          load: () => import(/* webpackChunkName: 'room' */ './room'),
+        },
+      ],
     },
 
     {
