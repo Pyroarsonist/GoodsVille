@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import history from 'core/history';
 
@@ -10,21 +10,10 @@ function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
-// todo: refactor to function
-class Link extends Component {
-  static propTypes = {
-    to: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
-    onClick: PropTypes.func,
-  };
-
-  static defaultProps = {
-    onClick: null,
-  };
-
-  handleClick = event => {
-    if (this.props.onClick) {
-      this.props.onClick(event);
+function Link({ to, children, ...props }) {
+  const handleClick = event => {
+    if (props.onClick) {
+      props.onClick(event);
     }
 
     if (isModifiedEvent(event) || !isLeftClickEvent(event)) {
@@ -36,18 +25,25 @@ class Link extends Component {
     }
 
     event.preventDefault();
-    history.push(this.props.to);
+    history.push(to);
   };
 
-  render() {
-    const { to, children, ...props } = this.props;
-    return (
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      <a href={to} {...props} onClick={this.handleClick}>
-        {children}
-      </a>
-    );
-  }
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <a href={to} {...props} onClick={handleClick}>
+      {children}
+    </a>
+  );
 }
+
+Link.defaultProps = {
+  onClick: null,
+};
+
+Link.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+};
 
 export default Link;
