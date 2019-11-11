@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import schema from 'data/schema';
 import { buildContext } from 'graphql-passport';
+import { ws, keepAlive } from 'config';
 
 const server = new ApolloServer({
   schema,
@@ -9,7 +10,9 @@ const server = new ApolloServer({
       req,
       res,
     }),
-  playground: __DEV__,
+  playground: __DEV__ && {
+    subscriptionEndpoint: ws.path,
+  },
   formatError(err) {
     if (__DEV__) return err;
     // not to expose any similar endpoints
@@ -18,6 +21,12 @@ const server = new ApolloServer({
       err.extensions.code = 'INTERNAL_SERVER_ERROR'; // eslint-disable-line no-param-reassign
     }
     return err;
+  },
+  subscriptions: {
+    onConnect: () => {},
+    onDisconnect: () => {},
+    keepAlive,
+    path: ws.path,
   },
   introspection: __DEV__,
   debug: __DEV__,

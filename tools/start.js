@@ -20,6 +20,21 @@ const watchOptions = {
   // ignored: /node_modules/,
 };
 
+let app;
+const hmrPrefix = '[\x1b[35mHMR\x1b[0m] ';
+let httpServer = null;
+
+async function reloadApp() {
+  console.warn(`${hmrPrefix}Cannot apply update.`);
+  delete require.cache[require.resolve('../build/server')];
+  app.apollo.subscriptionServer.close();
+
+  // eslint-disable-next-line global-require, import/no-unresolved
+  app = require('../build/server').default;
+  app.apollo.installSubscriptionHandlers(httpServer);
+  console.warn(`${hmrPrefix}App has been reloaded.`);
+}
+
 function createCompilationPromise(name, compiler, config) {
   return new Promise((resolve, reject) => {
     let timeStart = new Date();
@@ -131,15 +146,14 @@ async function start() {
     appPromise = new Promise(resolve => (appPromiseResolve = resolve));
   });
 
-  let app;
   server.use((req, res) => {
     appPromise
+      .then(() => app.init)
       .then(() => app.handle(req, res))
       .catch(error => console.error(error));
   });
 
   function checkForUpdate(fromUpdate) {
-    const hmrPrefix = '[\x1b[35mHMR\x1b[0m] ';
     if (!app.hot) {
       throw new Error(`${hmrPrefix}Hot Module Replacement is disabled.`);
     }
@@ -165,14 +179,9 @@ async function start() {
           checkForUpdate(true);
         }
       })
-      .catch(error => {
-        if (['abort', 'fail'].includes(app.hot.status())) {
-          console.warn(`${hmrPrefix}Cannot apply update.`);
-          delete require.cache[require.resolve('../build/server')];
-          // eslint-disable-next-line global-require, import/no-unresolved
-          app = require('../build/server').default;
-          console.warn(`${hmrPrefix}App has been reloaded.`);
-        } else {
+      .catch(async error => {
+        if (['abort', 'fail'].includes(app.hot.status())) await reloadApp();
+        else {
           console.warn(
             `${hmrPrefix}Update failed: ${error.stack || error.message}`,
           );
@@ -203,7 +212,7 @@ async function start() {
   appPromiseResolve();
 
   // Launch the development server with Browsersync and HMR
-  await new Promise((resolve, reject) =>
+  const data = await new Promise((resolve, reject) =>
     browserSync.create().init(
       {
         // https://www.browsersync.io/docs/options
@@ -216,6 +225,8 @@ async function start() {
     ),
   );
 
+  httpServer = data.server;
+  app.apollo.installSubscriptionHandlers(httpServer);
   const timeEnd = new Date();
   const time = timeEnd.getTime() - timeStart.getTime();
   console.info(`[${format(timeEnd)}] Server launched after ${time} ms`);
