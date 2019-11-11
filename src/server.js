@@ -199,10 +199,17 @@ app.use((err, req, res, next) => {
   res.send(`<!doctype html>${html}`);
 });
 
+if (__DEV__)
+  // eslint-disable-next-line no-return-assign
+  app.init = new Promise(res => (app.resolve = res));
+
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-const promise = models.sync().catch(err => console.error(err.stack));
+const promise = models
+  .sync()
+  .then(() => __DEV__ && app.resolve())
+  .catch(err => console.error(err.stack));
 if (!module.hot) {
   promise.then(() => {
     const server = createServer(app);

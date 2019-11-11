@@ -38,6 +38,7 @@
     "graphql-passport": "^0.5.0",
     "graphql-postgres-subscriptions": "^1.0.5",
     "graphql-s2s": "^0.20.2",
+    "graphql-subscriptions": "^1.1.0",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.6",
     "history": "^4.10.1",

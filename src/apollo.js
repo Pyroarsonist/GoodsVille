@@ -23,6 +23,8 @@ const server = new ApolloServer({
     return err;
   },
   subscriptions: {
+    onConnect: () => {},
+    onDisconnect: () => {},
     keepAlive,
     path: ws.path,
   },
