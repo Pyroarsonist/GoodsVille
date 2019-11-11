@@ -1,6 +1,7 @@
 import path from 'path';
 import Promise from 'bluebird';
 import express from 'express';
+import { createServer } from 'http';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { graphql } from 'graphql';
@@ -67,6 +68,7 @@ ApolloServer.install(app);
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
+  if (req.path === config.ws.path) return next();
   try {
     const css = new Set();
 
@@ -124,8 +126,7 @@ app.get('*', async (req, res, next) => {
     const route = await router.resolve(context);
 
     if (route.redirect) {
-      res.redirect(route.status || 302, route.redirect);
-      return;
+      return res.redirect(route.status || 302, route.redirect);
     }
 
     const data = { ...route };
@@ -154,18 +155,24 @@ app.get('*', async (req, res, next) => {
     if (route.chunks) route.chunks.forEach(addChunk);
     data.scripts = Array.from(scripts);
 
+    let wsHost = req.hostname;
+    if (__DEV__) wsHost = `${wsHost}:${config.port}`;
+
+    const wsUrl = `ws${req.httpSecure ? 's' : ''}://${wsHost}${config.ws.path}`;
+
     data.app = {
       apiUrl: config.api.clientUrl,
       state: context.store.getState(),
       apolloState: context.client.extract(),
+      wsUrl,
     };
 
     // eslint-disable-next-line react/jsx-props-no-spreading
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
     res.status(route.status || 200);
-    res.send(`<!doctype html>${html}`);
+    return res.send(`<!doctype html>${html}`);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 });
 
@@ -198,7 +205,11 @@ app.use((err, req, res, next) => {
 const promise = models.sync().catch(err => console.error(err.stack));
 if (!module.hot) {
   promise.then(() => {
-    app.listen(config.port, () => {
+    const server = createServer(app);
+
+    app.apollo.installSubscriptionHandlers(server);
+
+    server.listen(config.port, () => {
       console.info(`The server is running at http://localhost:${config.port}/`);
     });
   });

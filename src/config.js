@@ -35,4 +35,9 @@ module.exports = {
       secret: 'SECreT_sEcssdon',
     },
   },
+  keepAlive: process.env.KEEP_ALIVE_WS || 60000,
+  ws: {
+    url: process.env.WS_URL || 'ws://localhost:3000',
+    path: process.env.WS_PATH || '/subscriptions',
+  },
 };
