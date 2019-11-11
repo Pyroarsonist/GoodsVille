@@ -47,7 +47,7 @@ function Bids({ lot }) {
 }
 
 Bids.propTypes = {
-  lot: PropTypes.shell({
+  lot: PropTypes.shape({
     startPrice: PropTypes.number.isRequired,
     currentPrice: PropTypes.number.isRequired,
   }).isRequired,
