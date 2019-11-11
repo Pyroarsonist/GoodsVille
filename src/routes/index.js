@@ -28,16 +28,7 @@ const routes = {
     },
     {
       path: '/rooms',
-      children: [
-        {
-          path: '',
-          load: () => import(/* webpackChunkName: 'room' */ './rooms'),
-        },
-        {
-          path: '/:roomId',
-          load: () => import(/* webpackChunkName: 'room' */ './room'),
-        },
-      ],
+      load: () => import(/* webpackChunkName: 'rooms' */ './rooms'),
     },
 
     {
