@@ -1,10 +1,10 @@
 import React from 'react';
 import RoomItem from './RoomItem';
 import SearchBar from './SearchBar';
-import Pagination from './Pagination';
+import PaginationBlock from './PaginationBlock';
 
 function RoomList() {
-  const getRooms = [
+  const rooms = [
     {
       name: 'Lorem',
       shortDescription:
@@ -56,11 +56,11 @@ function RoomList() {
       <SearchBar />
       <div className="container">
         <div className="d-flex flex-wrap align-content-around mt-3">
-          {getRooms.map(item => (
+          {rooms.map(item => (
             <RoomItem room={item} key={item.roomId} />
           ))}
         </div>
-        <Pagination />
+        <PaginationBlock />
       </div>
     </>
   );
