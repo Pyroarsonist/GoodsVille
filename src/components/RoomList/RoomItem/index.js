@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '../../Link';
+import Link from 'components/Link';
 
 function RoomItem({ room }) {
   const handleClick = async () => {};
