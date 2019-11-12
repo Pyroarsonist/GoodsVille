@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '../../Link';
+import Link from 'components/Link';
 
 function AboutLot({ lot, owner }) {
   return (
@@ -22,11 +22,12 @@ function AboutLot({ lot, owner }) {
 }
 
 AboutLot.propTypes = {
-  lot: PropTypes.shell({
-    startPrice: PropTypes.number.isRequired,
-    currentPrice: PropTypes.number.isRequired,
+  lot: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
   }).isRequired,
-  owner: PropTypes.shell({
+  owner: PropTypes.shape({
     nickName: PropTypes.string.isRequired,
   }).isRequired,
 };

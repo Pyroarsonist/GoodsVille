@@ -24,7 +24,7 @@ function Room({ id }) {
 }
 
 Room.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Room;
