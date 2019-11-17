@@ -1,23 +1,17 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import UniversalRouter from 'universal-router';
+import { isFunction } from 'lodash';
 import routes from './routes';
 
 export default new UniversalRouter(routes, {
-  resolveRoute(context, params) {
-    if (typeof context.route.load === 'function') {
-      return context.route
-        .load()
-        .then(action => action.default(context, params));
+  async resolveRoute(context, params) {
+    if (isFunction(context.route.load)) {
+      const route = await context.route.load(context, params);
+      if (isFunction(route.default)) return route.default(context, params);
+      // eslint-disable-next-line no-param-reassign
+      if (route?.default) context.route.children = [route.default];
+      return undefined;
     }
-    if (typeof context.route.action === 'function') {
+    if (isFunction(context.route.action)) {
       return context.route.action(context, params);
     }
     return undefined;
