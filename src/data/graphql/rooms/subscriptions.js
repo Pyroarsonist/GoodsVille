@@ -1,19 +1,20 @@
 import { withFilter } from 'graphql-subscriptions';
 import pubsub from 'core/subscriptions/graphqlPubSub';
+import { Room } from 'data/models';
 
 export const subscription = [
   `
-  lot(id: ID!): Lot!
+  room(id: ID!): Room!
 `,
 ];
 
 export const resolvers = {
   Subscription: {
-    lot: {
-      resolve: item => item,
+    room: {
+      resolve: (root, { id }) => Room.getAllData(id),
       subscribe: withFilter(
-        () => pubsub.asyncIterator('lot'),
-        (payload, { id }) => +payload?.id === +id,
+        () => pubsub.asyncIterator('room'),
+        (pubsubID, { id }) => +pubsubID === +id,
       ),
     },
   },

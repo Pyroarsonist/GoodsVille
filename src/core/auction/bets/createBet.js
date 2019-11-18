@@ -4,6 +4,8 @@ import { Bet, Lot, Room, User } from 'data/models';
 import { Op } from 'sequelize';
 import { Decimal } from 'decimal.js';
 import Bluebird from 'bluebird';
+import moment from 'moment';
+import pubsub from 'core/subscriptions/graphqlPubSub';
 
 const debug = debugHandler('goodsville:auction:bet:create');
 
@@ -110,6 +112,13 @@ const createBet = async ({ price: _price, lotId, userId }, transaction) => {
   );
 
   await lot.update({ currentPrice: price }, { transaction });
+
+  await lot.room.update(
+    { supposedEndsAt: moment(bet.createdAt).add(3, 'm') },
+    { transaction },
+  );
+
+  pubsub.publish('room', lot.room.id);
 
   // todo: add notification for last highest bet user
 };

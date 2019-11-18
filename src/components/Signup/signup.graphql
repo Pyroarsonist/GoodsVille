@@ -2,7 +2,5 @@ mutation signup($email: String!, $password: String!) {
   signup(email: $email, password: $password) {
     id
     email
-
-    # add more fields
   }
 }

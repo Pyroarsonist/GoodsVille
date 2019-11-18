@@ -1,6 +1,7 @@
 import debugHandler from 'debug';
 import sequelize from 'data/sequelize';
 import { Room, Lot } from 'data/models';
+import moment from 'moment';
 
 const debug = debugHandler('goodsville:auction:lot:create');
 
@@ -22,6 +23,7 @@ async function createLot(
   await Room.create(
     {
       startedAt,
+      supposedEndsAt: moment(startedAt).add(15, 'm'),
       lotId: lot.id,
     },
     { transaction },

@@ -91,6 +91,8 @@ module.exports = {
     'react/destructuring-assignment': 0,
     'arrow-body-style': ['error', 'as-needed'],
     radix: 'off',
+
+    'import/no-cycle': 'off',
   },
 
   settings: {

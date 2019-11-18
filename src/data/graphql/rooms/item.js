@@ -1,4 +1,4 @@
-import { Lot, Room } from 'data/models';
+import { Room } from 'data/models';
 
 export const schema = [
   `
@@ -13,7 +13,8 @@ export const schema = [
     status: RoomStatus!
     lot: Lot!
     startedAt: Date!
-    endedAt: Date!
+    endedAt: Date
+    supposedEndsAt: Date!
   }
 `,
 ];
@@ -27,12 +28,7 @@ export const queries = [
 export const resolvers = {
   RootQuery: {
     async room(root, { id }) {
-      return Room.findByPk(id, {
-        include: {
-          model: Lot,
-          as: 'lot',
-        },
-      });
+      return Room.getAllData(id);
     },
   },
 };

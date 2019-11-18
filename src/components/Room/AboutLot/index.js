@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'components/Link';
 
 function AboutLot({ lot, owner }) {
   return (
     <div className="card mb-4 mt-4 shadow-sm">
       <div className="card-header d-flex justify-content-between align-items-center">
         <span className="card-title">{lot.name}</span>
-        <Link to="/" className="mr-2">
-          {owner.nickName}
-        </Link>
+        <span className="mr-2">{owner.nickName}</span>
       </div>
       <div className="card-body">
         <span className="card-text">{lot.description}</span>

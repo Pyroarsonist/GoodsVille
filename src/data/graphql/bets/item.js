@@ -12,7 +12,7 @@ export const schema = [
     id: ID!
     price: Float!
     status: String
-    user: User!
+    owner: User!
     lot: Lot!
   }
 `,

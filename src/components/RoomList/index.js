@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import PaginationBlock from './PaginationBlock';
 
 function RoomList() {
+  // todo: add room query
   const rooms = [
     {
       name: 'Lorem',
