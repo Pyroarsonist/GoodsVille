@@ -1,10 +1,8 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import s from './Header.css';
+import s from './index.css';
 import Link from '../Link';
 import Navigation from '../Navigation';
-import logoUrl from './logo-small.png';
-import logoUrl2x from './logo-small@2x.png';
 
 function Header() {
   return (
@@ -12,14 +10,7 @@ function Header() {
       <div className={s.container}>
         <Navigation />
         <Link className={s.brand} to="/">
-          <img
-            src={logoUrl}
-            srcSet={`${logoUrl2x} 2x`}
-            width="38"
-            height="38"
-            alt="React"
-          />
-          <span className={s.brandTxt}>Your Company</span>
+          <span className={s.brandTxt}>GoodsVille</span>
         </Link>
       </div>
     </div>

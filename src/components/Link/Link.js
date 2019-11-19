@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import history from 'core/history';
@@ -29,8 +30,12 @@ function Link({ to, children, ...props }) {
   };
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <a href={to} {...props} onClick={handleClick}>
+    <a
+      {...props}
+      href={to}
+      onClick={handleClick}
+      style={{ color: 'inherit', textDecoration: 'inherit' }}
+    >
       {children}
     </a>
   );
