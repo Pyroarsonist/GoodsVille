@@ -5,7 +5,7 @@ function SearchBar() {
   const handleSubmit = async () => {};
   return (
     <nav className="navbar navbar-light bg-light">
-      <h1 className="ml-5 pl-5">Lots</h1>
+      <h1 className="ml-5 pl-5">Rooms</h1>
       <form className="form-inline" onSubmit={handleSubmit()}>
         <input
           className="form-control mr-sm-2"

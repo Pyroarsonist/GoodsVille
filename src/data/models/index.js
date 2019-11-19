@@ -91,6 +91,11 @@ Room.belongsToMany(User, {
   otherKey: 'userId',
 });
 
+Room.hasOne(RoomToUser, {
+  as: 'rtu',
+  foreignKey: 'roomId',
+});
+
 function sync(...args) {
   return sequelize.sync(...args);
 }

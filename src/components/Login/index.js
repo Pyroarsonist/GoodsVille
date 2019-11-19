@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-apollo';
-import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import history from 'core/history';
+import cx from 'classnames';
 import loginMutation from './login.graphql';
 import s from './Login.css';
 
-function Login({ title }) {
+function Login() {
+  const [errorOccured, setErrorOcurred] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,12 +18,17 @@ function Login({ title }) {
     },
   });
 
+  useEffect(() => {
+    setErrorOcurred(false);
+  }, [email, password]);
+
   const handleSubmit = async event => {
     event.preventDefault();
     try {
       await login();
       history.push('/rooms');
     } catch (e) {
+      setErrorOcurred(true);
       console.error(e);
       // todo: add visible error
     }
@@ -30,15 +36,14 @@ function Login({ title }) {
 
   return (
     <div className={s.root}>
-      <div className={s.container}>
+      <div className={cx('mt-3', s.container)}>
         <form onSubmit={handleSubmit}>
-          <h1>{title}</h1>
-          <p className={s.lead}>Log in with your e-mail</p>
+          <h3 className="mb-3">Log in</h3>
           <div className={s.formGroup}>
             <div className={s.label}>
-              Username or email address:
+              Email address:
               <input
-                className={s.input}
+                className={cx(s.input, errorOccured && 'border-danger')}
                 type="text"
                 placeholder="Email address"
                 onChange={e => setEmail(e.target.value)}
@@ -49,7 +54,7 @@ function Login({ title }) {
             <div className={s.label}>
               Password:
               <input
-                className={s.input}
+                className={cx(s.input, errorOccured && 'border-danger')}
                 type="password"
                 placeholder="Password"
                 onChange={e => setPassword(e.target.value)}
@@ -66,9 +71,5 @@ function Login({ title }) {
     </div>
   );
 }
-
-Login.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 export default withStyles(s)(Login);

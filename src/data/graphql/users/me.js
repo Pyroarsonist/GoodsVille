@@ -7,7 +7,7 @@ export const queries = [
 export const resolvers = {
   RootQuery: {
     async me(root, args, context) {
-      return context.getUser();
+      return context?.getUser();
     },
   },
 };

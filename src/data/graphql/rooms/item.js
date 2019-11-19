@@ -15,6 +15,7 @@ export const schema = [
     startedAt: Date!
     endedAt: Date
     supposedEndsAt: Date!
+    userSubscribed: Boolean!
   }
 `,
 ];
@@ -30,5 +31,8 @@ export const resolvers = {
     async room(root, { id }) {
       return Room.getAllData(id);
     },
+  },
+  Room: {
+    userSubscribed: ({ rtu }) => !!rtu?.involved,
   },
 };

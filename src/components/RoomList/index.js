@@ -1,64 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useQuery } from 'react-apollo';
 import RoomItem from './RoomItem';
 import SearchBar from './SearchBar';
 import PaginationBlock from './PaginationBlock';
+import roomListQuery from './roomList.graphql';
 
 function RoomList() {
-  // todo: add room query
-  const rooms = [
-    {
-      name: 'Lorem',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere ligula in lectus fermentum, sit amet mollis ipsum nullam.',
-      startPrice: '14.88',
-      currentPrice: '120.00',
-      startedAt: '12:00',
-      roomId: 1,
+  // todo: add pagination
+  const [limit /* setLimit */] = useState(10);
+  const [offset /* setOffset */] = useState(0);
+  const { loading, data, error } = useQuery(roomListQuery, {
+    variables: {
+      input: {
+        limit,
+        offset,
+      },
     },
-    {
-      name: 'Lorem',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere ligula in lectus fermentum, sit amet mollis ipsum nullam.',
-      startPrice: '14.88',
-      currentPrice: '120.00',
-      startedAt: '12:00',
-      roomId: 2,
-    },
-    {
-      name: 'Lorem',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere ligula in lectus fermentum, sit amet mollis ipsum nullam.',
-      startPrice: '14.88',
-      currentPrice: '120.00',
-      startedAt: '12:00',
-      roomId: 3,
-    },
-    {
-      name: 'Lorem',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere ligula in lectus fermentum, sit amet mollis ipsum nullam.',
-      startPrice: '14.88',
-      currentPrice: '120.00',
-      startedAt: '12:00',
-      roomId: 4,
-    },
-    {
-      name: 'Lorem',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere ligula in lectus fermentum, sit amet mollis ipsum nullam.',
-      startPrice: '14.88',
-      currentPrice: '120.00',
-      startedAt: '12:00',
-      roomId: 5,
-    },
-  ];
+  });
+  // todo: add error view
+  if (error) return <p>Error view</p>;
+  if (loading) return <p>Loading ...</p>;
+  const { rooms } = data;
   return (
     <>
       <SearchBar />
       <div className="container">
         <div className="d-flex flex-wrap align-content-around mt-3">
-          {rooms.map(item => (
-            <RoomItem room={item} key={item.roomId} />
+          {rooms.map(room => (
+            <RoomItem room={room} key={room.id} />
           ))}
         </div>
         <PaginationBlock />

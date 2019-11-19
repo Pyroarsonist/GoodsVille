@@ -7,7 +7,7 @@ export const mutation = [
 export const resolvers = {
   Mutation: {
     async logout(root, args, context) {
-      await context.logout();
+      await context?.logout();
       return 'ok';
     },
   },

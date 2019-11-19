@@ -7,7 +7,7 @@ export const schema = [
   
   input PagingInput {
     limit: Int
-    offset: String
+    offset: Int
   }
 `,
 ];
