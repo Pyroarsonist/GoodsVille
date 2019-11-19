@@ -11,6 +11,9 @@ const server = new ApolloServer({
       res,
     }),
   playground: __DEV__ && {
+    settings: {
+      'request.credentials': 'include',
+    },
     subscriptionEndpoint: ws.path,
   },
   formatError(err) {

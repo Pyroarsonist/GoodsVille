@@ -1,20 +1,24 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
 import history from 'core/history';
 import s from './Signup.css';
 import signupMutation from './signup.graphql';
 
-function Signup({ title }) {
+function Signup() {
   const [email, setEmail] = useState('');
+  const [nickName, setNickName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordDuplicate, setPasswordDuplicate] = useState('');
 
   const [signup] = useMutation(signupMutation, {
     variables: {
       email,
+      nickName,
+      fullName,
       password,
     },
   });
@@ -34,20 +38,44 @@ function Signup({ title }) {
     <div className={s.root}>
       <div className={s.container}>
         <form onSubmit={handleSubmit}>
-          <h1>{title}</h1>
-          <p className={s.lead}>Log in with your e-mail</p>
+          <h1 className="mt-3 mb-3">Registration</h1>
           <div className={s.formGroup}>
             <div className={s.label}>
-              Username or email address:
+              Email address:
               <input
                 className={s.input}
                 type="email"
-                // autoFocus
+                autoFocus
                 placeholder="Email address"
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
           </div>
+
+          <div className={s.formGroup}>
+            <div className={s.label}>
+              Nick name
+              <input
+                className={s.input}
+                type="text"
+                placeholder="Nick name"
+                onChange={e => setNickName(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={s.formGroup}>
+            <div className={s.label}>
+              Full name
+              <input
+                className={s.input}
+                type="text"
+                placeholder="Full name"
+                onChange={e => setFullName(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div className={s.formGroup}>
             <div className={s.label}>
               Password:
@@ -86,9 +114,5 @@ function Signup({ title }) {
     </div>
   );
 }
-
-Signup.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 export default withStyles(s)(Signup);

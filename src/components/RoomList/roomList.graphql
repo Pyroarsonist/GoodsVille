@@ -1,0 +1,19 @@
+query getRoomList($input: PagingInput!) {
+  rooms(input: $input) {
+    id
+    status
+    lot {
+      id
+      description
+      shortDescription
+      name
+      startPrice
+      currentPrice
+      tag
+    }
+    startedAt
+    endedAt
+    supposedEndsAt
+    userSubscribed
+  }
+}

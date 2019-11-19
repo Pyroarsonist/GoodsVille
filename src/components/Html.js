@@ -37,7 +37,7 @@ class Html extends Component {
             <link key={script} rel="preload" href={script} as="script" />
           ))}
           <link rel="manifest" href="/site.webmanifest" />
-          <link rel="apple-touch-icon" href="/icon.png" />
+          <link rel="apple-touch-icon" href="/icon.jpg" />
           {styles.map(style => (
             <style
               key={style.id}

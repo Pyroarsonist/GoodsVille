@@ -28,7 +28,7 @@ export const resolvers = {
       },
       context,
     ) {
-      const userId = context.getUser()?.id;
+      const userId = context?.getUser()?.id;
 
       if (!userId) throw new Error('User not logged in');
 

@@ -1,4 +1,4 @@
-import { Lot, Room } from 'data/models';
+import { Lot, Room, RoomToUser } from 'data/models';
 import { pageInputResolver } from 'data/util';
 
 export const queries = [
@@ -9,15 +9,30 @@ export const queries = [
 
 export const resolvers = {
   RootQuery: {
-    async rooms(root, { input }) {
+    async rooms(root, { input }, context) {
       const { limit, offset } = pageInputResolver(input);
-      return Room.findAll({
-        limit,
-        offset,
-        include: {
+      const userId = context?.getUser()?.id;
+
+      const include = [
+        {
           model: Lot,
           as: 'lot',
         },
+      ];
+
+      if (userId)
+        include.push({
+          model: RoomToUser,
+          as: 'rtu',
+          where: {
+            userId,
+          },
+          required: false,
+        });
+      return Room.findAll({
+        limit,
+        offset,
+        include,
         order: [['startedAt', 'DESC']],
       });
     },
