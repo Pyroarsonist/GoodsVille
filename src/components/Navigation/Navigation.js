@@ -14,6 +14,12 @@ function Navigation() {
         Contact
       </Link>
       <span className={s.spacer}> | </span>
+      <Link className={s.link} to="/createLot">
+        <button className="btn btn-info" type="button">
+          Create lot
+        </button>
+      </Link>
+      <span className={s.spacer}> | </span>
       <Link className={s.link} to="/login">
         Log in
       </Link>

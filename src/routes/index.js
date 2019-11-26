@@ -19,6 +19,10 @@ const routes = {
       load: () => import(/* webpackChunkName: 'signup' */ './signup'),
     },
     {
+      path: '/createLot',
+      load: () => import(/* webpackChunkName: 'lotCreation' */ './lotCreation'),
+    },
+    {
       path: '/privacy',
       load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
     },
