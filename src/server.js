@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom/server';
 import { getDataFromTree } from 'react-apollo';
 import PrettyError from 'pretty-error';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import _ from 'lodash';
 import ApolloServer from './apollo';
 import createApolloClient from './core/createApolloClient';
 import App from './components/App';
@@ -91,7 +92,9 @@ app.get('*', async (req, res, next) => {
     });
 
     const initialState = {
-      user: req.user || null,
+      user: req.user
+        ? _.pick(req.user, ['id', 'email', 'fullName', 'nickName'])
+        : null,
     };
 
     const store = configureStore(initialState, {
@@ -121,6 +124,8 @@ app.get('*', async (req, res, next) => {
       storeSubscription: null,
       // Apollo Client for use with react-apollo
       client: apolloClient,
+
+      user: store.getState().user,
     };
 
     const route = await router.resolve(context);

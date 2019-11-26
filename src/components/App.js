@@ -16,6 +16,7 @@ const ContextType = {
 
   store: PropTypes.shape().isRequired,
   storeSubscription: PropTypes.shape(),
+  user: PropTypes.shape(),
 };
 
 /**

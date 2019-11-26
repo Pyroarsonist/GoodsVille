@@ -27,6 +27,7 @@ function Login() {
     try {
       await login();
       history.push('/rooms');
+      window.location.href = '/rooms';
     } catch (e) {
       setErrorOcurred(true);
       console.error(e);

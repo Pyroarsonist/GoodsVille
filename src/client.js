@@ -26,6 +26,12 @@ const insertCss = (...styles) => {
   return () => removeCss.forEach(dispose => dispose());
 };
 
+const store = configureStore(window.App.state, {
+  fetch,
+  history,
+  apolloClient,
+});
+
 // Global (context) variables that can be easily accessed from any React component
 // https://facebook.github.io/react/docs/context.html
 const context = {
@@ -35,7 +41,8 @@ const context = {
   client: apolloClient,
   // Initialize a new Redux store
   // http://redux.js.org/docs/basics/UsageWithReact.html
-  store: configureStore(window.App.state, { fetch, history, apolloClient }),
+  store,
+  user: store.getState().user,
   fetch,
   storeSubscription: null,
 };
