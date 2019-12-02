@@ -17,12 +17,16 @@ function Navigation(props, { user }) {
       <Link className={s.link} to="/contact">
         Contact
       </Link>
-      <span className={s.spacer}> | </span>
-      <Link className={s.link} to="/createLot">
-        <button className="btn btn-info" type="button">
-          Create lot
-        </button>
-      </Link>
+      {user && (
+        <>
+          <span className={s.spacer}> | </span>
+          <Link className={s.link} to="/createLot">
+            <button className="btn btn-info" type="button">
+              Create lot
+            </button>
+          </Link>
+        </>
+      )}
       <span className={s.spacer}> | </span>
       {user ? (
         <>

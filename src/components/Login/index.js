@@ -39,13 +39,14 @@ function Login() {
     <div className={s.root}>
       <div className={cx('mt-3', s.container)}>
         <form onSubmit={handleSubmit}>
-          <h3 className="mb-3">Log in</h3>
+          <h1 className="mb-3">Log in</h1>
           <div className={s.formGroup}>
             <div className={s.label}>
               Email address:
               <input
                 className={cx(s.input, errorOccured && 'border-danger')}
                 type="text"
+                autoComplete="email"
                 placeholder="Email address"
                 onChange={e => setEmail(e.target.value)}
               />
@@ -57,6 +58,7 @@ function Login() {
               <input
                 className={cx(s.input, errorOccured && 'border-danger')}
                 type="password"
+                autoComplete="password"
                 placeholder="Password"
                 onChange={e => setPassword(e.target.value)}
               />

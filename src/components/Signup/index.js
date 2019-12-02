@@ -28,6 +28,7 @@ function Signup() {
     try {
       await signup();
       history.push('/rooms');
+      window.location.href = '/rooms';
     } catch (e) {
       console.error(e);
       // todo: add visible error
@@ -45,6 +46,7 @@ function Signup() {
               <input
                 className={s.input}
                 type="email"
+                autoComplete="email"
                 autoFocus
                 placeholder="Email address"
                 onChange={e => setEmail(e.target.value)}
@@ -58,6 +60,7 @@ function Signup() {
               <input
                 className={s.input}
                 type="text"
+                autoComplete="username"
                 placeholder="Nick name"
                 onChange={e => setNickName(e.target.value)}
               />
@@ -70,6 +73,7 @@ function Signup() {
               <input
                 className={s.input}
                 type="text"
+                autoComplete="name"
                 placeholder="Full name"
                 onChange={e => setFullName(e.target.value)}
               />
@@ -82,6 +86,7 @@ function Signup() {
               <input
                 className={s.input}
                 type="password"
+                autoComplete="new-password"
                 placeholder="Password"
                 onChange={e => setPassword(e.target.value)}
               />
@@ -98,6 +103,7 @@ function Signup() {
                     ? 'border-success'
                     : 'border-danger',
                 )}
+                autoComplete="new-password"
                 type="password"
                 placeholder="Confirm password"
                 onChange={e => setPasswordDuplicate(e.target.value)}
