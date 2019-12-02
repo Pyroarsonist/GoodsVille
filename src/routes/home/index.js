@@ -4,7 +4,7 @@ import Home from './Home';
 
 async function action() {
   return {
-    title: 'React Starter Kit',
+    title: 'GoodsVille',
     chunks: ['home'],
     component: (
       <Layout>
