@@ -28,6 +28,7 @@ async function reloadApp() {
   console.warn(`${hmrPrefix}Cannot apply update.`);
   delete require.cache[require.resolve('../build/server')];
   app.apollo.subscriptionServer.close();
+  app.cleanup();
 
   // eslint-disable-next-line global-require, import/no-unresolved
   app = require('../build/server').default;

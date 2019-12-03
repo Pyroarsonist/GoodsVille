@@ -20,6 +20,7 @@ import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import createFetch from './createFetch';
 import passport from './core/auth/passport';
+import scheduler, { cleanup } from './core/scheduler';
 import getSession from './core/auth/session';
 import router from './router';
 import models from './data/models';
@@ -213,6 +214,7 @@ if (__DEV__)
 // -----------------------------------------------------------------------------
 const promise = models
   .sync()
+  .then(scheduler)
   .then(() => __DEV__ && app.resolve())
   .catch(err => console.error(err.stack));
 if (!module.hot) {
@@ -232,6 +234,7 @@ if (!module.hot) {
 // -----------------------------------------------------------------------------
 if (module.hot) {
   app.hot = module.hot;
+  app.cleanup = cleanup;
   module.hot.accept('./router');
 }
 

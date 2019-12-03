@@ -40,4 +40,8 @@ module.exports = {
     url: process.env.WS_URL || 'ws://localhost:3000',
     path: process.env.WS_PATH || '/subscriptions',
   },
+  intervals: {
+    closeLots: process.env.CLOSE_LOTS_INTERVAL || 10_000,
+    setPendingRooms: process.env.SET_PENDING_ROOMS_INTERVAL || 10_000,
+  },
 };
