@@ -37,6 +37,7 @@ const Room = Model.define('Room', {
 });
 
 Room.getAllData = function getAllData(id) {
+  if (!id) return null;
   return Room.findByPk(id, {
     include: [
       {

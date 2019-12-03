@@ -48,7 +48,7 @@ module.exports = {
   // https://facebook.github.io/jest/docs/en/configuration.html#modulefileextensions-array-string
   moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
 
-  // moduleDirectories: // [array<string>]
+  moduleDirectories: ['node_modules', 'src'], // [array<string>]
 
   // A map from regular expressions to module names that allow to stub out resources,
   // like images or styles with a single module.

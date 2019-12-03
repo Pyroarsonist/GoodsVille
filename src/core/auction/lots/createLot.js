@@ -14,13 +14,14 @@ async function createLot(
       description,
       shortDescription,
       name,
-      price,
+      startPrice: price,
+      currentPrice: price,
       tag,
       ownerId,
     },
     { transaction },
   );
-  await Room.create(
+  lot.room = await Room.create(
     {
       startedAt,
       supposedEndsAt: moment(startedAt).add(15, 'm'),
@@ -29,12 +30,14 @@ async function createLot(
     { transaction },
   );
   debug('Created lot #%s, owner: %s', lot.id, ownerId);
+  return lot;
 }
 export default async args => {
   const transaction = await sequelize.transaction();
   try {
-    await createLot(args, transaction);
+    const lot = await createLot(args, transaction);
     await transaction.commit();
+    return lot;
   } catch (e) {
     debug('Failed create lot\n%O', e);
     await transaction.rollback();
