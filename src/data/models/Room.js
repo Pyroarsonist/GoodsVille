@@ -1,6 +1,6 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
-import { Bet, Lot, User } from './index';
+import { Bet, Lot, RoomToUser, User } from './index';
 
 const Room = Model.define('Room', {
   id: {
@@ -36,39 +36,50 @@ const Room = Model.define('Room', {
   },
 });
 
-Room.getAllData = function getAllData(id) {
+Room.getAllData = function getAllData(id, userId) {
   if (!id) return null;
-  return Room.findByPk(id, {
-    include: [
-      {
-        model: Lot,
-        as: 'lot',
-        include: [
-          {
-            model: Bet,
-            as: 'bets',
-            required: false,
-            include: [
-              {
-                model: User,
-                as: 'owner',
-                required: false,
-              },
-            ],
-          },
-          {
-            model: User,
-            as: 'owner',
-            required: false,
-          },
-          {
-            model: User,
-            as: 'purchaser',
-            required: false,
-          },
-        ],
+  const include = [
+    {
+      model: Lot,
+      as: 'lot',
+      include: [
+        {
+          model: Bet,
+          as: 'bets',
+          required: false,
+          include: [
+            {
+              model: User,
+              as: 'owner',
+              required: false,
+            },
+          ],
+        },
+        {
+          model: User,
+          as: 'owner',
+          required: false,
+        },
+        {
+          model: User,
+          as: 'purchaser',
+          required: false,
+        },
+      ],
+    },
+  ];
+
+  if (userId)
+    include.push({
+      model: RoomToUser,
+      as: 'rtu',
+      where: {
+        userId,
       },
-    ],
+      required: false,
+    });
+  return Room.findByPk(id, {
+    include,
   });
 };
 

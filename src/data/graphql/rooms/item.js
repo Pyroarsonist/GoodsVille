@@ -3,11 +3,11 @@ import { Room } from 'data/models';
 export const schema = [
   `
   enum RoomStatus {
-    open 
+    open
     pending
     closed
   }
-  
+
   type Room {
     id: ID!
     status: RoomStatus!
@@ -28,8 +28,9 @@ export const queries = [
 
 export const resolvers = {
   RootQuery: {
-    async room(root, { id }) {
-      return Room.getAllData(id);
+    async room(root, { id }, context) {
+      const userId = context?.getUser()?.id;
+      return Room.getAllData(id, userId);
     },
   },
   Room: {
