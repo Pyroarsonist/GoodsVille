@@ -16,7 +16,7 @@ export default () => {
 
   debug('Starting scheduler');
   _.forEach(jobs, async job => {
-    debug('Adding job %s with interval %d', job.name, job.interval);
+    debug('Adding job %s with interval %d sec', job.name, job.interval / 1000);
     const func = async () => {
       debug('Starting job %s', job.name);
       try {

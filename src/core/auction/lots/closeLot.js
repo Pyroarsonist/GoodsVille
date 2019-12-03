@@ -29,7 +29,12 @@ const closeLot = async (id, transaction) => {
     transaction,
   });
   if (!lot) throw new Error('Lot not exists');
-  if (lot.purchaserId) throw new Error('Lot is already purchased');
+
+  if (lot.purchaserId) {
+    lot.room.status = 'closed';
+    await lot.room.save();
+    throw new Error('Lot is already purchased');
+  }
 
   const [highestBet] = await lot.getBets(
     {
