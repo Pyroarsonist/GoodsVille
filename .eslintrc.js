@@ -6,11 +6,12 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:css-modules/recommended',
+    'plugin:jest/recommended',
     'prettier',
     'prettier/react',
   ],
 
-  plugins: ['css-modules', 'prettier'],
+  plugins: ['css-modules', 'jest', 'prettier'],
 
   globals: {
     __DEV__: true,
@@ -18,6 +19,7 @@ module.exports = {
 
   env: {
     browser: true,
+    'jest/globals': true,
   },
 
   rules: {
@@ -93,6 +95,8 @@ module.exports = {
     radix: 'off',
 
     'import/no-cycle': 'off',
+
+    'no-plusplus': 'off',
   },
 
   settings: {

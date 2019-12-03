@@ -24,7 +24,10 @@ module.exports = {
   },
 
   // Database
-  databaseUrl: process.env.DATABASE_URL,
+  databaseUrl:
+    process.env.NODE_ENV === 'test'
+      ? process.env.TEST_DATABASE_URL
+      : process.env.DATABASE_URL,
 
   // Authentication
   auth: {
@@ -41,7 +44,7 @@ module.exports = {
     path: process.env.WS_PATH || '/subscriptions',
   },
   intervals: {
-    closeLots: process.env.CLOSE_LOTS_INTERVAL || 10_000,
-    setPendingRooms: process.env.SET_PENDING_ROOMS_INTERVAL || 10_000,
+    closeLots: process.env.CLOSE_LOTS_INTERVAL || 10000, // 10 sec
+    setPendingRooms: process.env.SET_PENDING_ROOMS_INTERVAL || 10000, // 10 sec
   },
 };
