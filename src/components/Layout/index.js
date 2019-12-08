@@ -62,7 +62,7 @@ function Layout({ children, enqueueSnackbar, closeSnackbar }) {
             }
           }}
         >
-          Shut
+          OK
         </button>
       ),
     });
