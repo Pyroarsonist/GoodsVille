@@ -46,5 +46,6 @@ module.exports = {
   intervals: {
     closeLots: process.env.CLOSE_LOTS_INTERVAL || 10000, // 10 sec
     setPendingRooms: process.env.SET_PENDING_ROOMS_INTERVAL || 10000, // 10 sec
+    notifyUsersAboutLots: process.env.NOTIFY_USERS_ABOUT_LOTS_INTERVAL || 10000, // 10 sec
   },
 };
