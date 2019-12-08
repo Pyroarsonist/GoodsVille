@@ -5,8 +5,6 @@ import SearchBar from './SearchBar';
 import PaginationBlock from './PaginationBlock';
 import roomListQuery from './roomList.graphql';
 
-const loadingView = <p>Loading ...</p>;
-
 function RoomList() {
   // todo: add pagination
   const [limit /* setLimit */] = useState(10);
@@ -21,12 +19,14 @@ function RoomList() {
   });
   // todo: add error view
   if (error) return <p>Error view</p>;
-  if (loading) return loadingView;
-  const { rooms } = data;
+  if (loading) return <p>Loading ...</p>;
+  const { rooms: { items: rooms, count } = {} } = data;
   return (
     <>
       <SearchBar />
       <div className="container">
+        {/* todo: change */}
+        <h4>Rooms count: {count}</h4>
         <div className="d-flex flex-wrap align-content-around mt-3">
           {rooms.map(room => (
             <RoomItem room={room} key={room.id} refetch={refetch} />
