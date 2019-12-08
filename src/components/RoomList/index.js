@@ -20,11 +20,13 @@ function RoomList() {
   // todo: add error view
   if (error) return <p>Error view</p>;
   if (loading) return <p>Loading ...</p>;
-  const { rooms } = data;
+  const { rooms: { items: rooms, count } = {} } = data;
   return (
     <>
       <SearchBar />
       <div className="container">
+        {/* todo: change */}
+        <h4>Rooms count: {count}</h4>
         <div className="d-flex flex-wrap align-content-around mt-3">
           {rooms.map(room => (
             <RoomItem room={room} key={room.id} />

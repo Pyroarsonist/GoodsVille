@@ -3,7 +3,7 @@ import { pageInputResolver } from 'data/util';
 
 export const queries = [
   `
-  rooms(input: PagingInput): [Room!]!
+  rooms(input: PagingInput): PagingData<Room>
 `,
 ];
 
@@ -29,12 +29,19 @@ export const resolvers = {
           },
           required: false,
         });
-      return Room.findAll({
+
+      const { rows: rooms, count } = await Room.findAndCountAll({
         limit,
         offset,
         include,
         order: [['startedAt', 'DESC']],
       });
+      return {
+        items: rooms,
+        count,
+        limit,
+        offset,
+      };
     },
   },
 };
