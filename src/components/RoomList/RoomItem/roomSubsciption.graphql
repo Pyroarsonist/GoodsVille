@@ -1,3 +1,0 @@
-mutation roomSubsciption($roomId: ID!, $involved: Boolean) {
-  roomSubsciption(roomId: $roomId, involved: $involved)
-}

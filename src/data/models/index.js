@@ -96,6 +96,15 @@ Room.hasOne(RoomToUser, {
   foreignKey: 'roomId',
 });
 
+Room.hasMany(Notification, {
+  as: 'notification',
+  foreignKey: 'roomId',
+});
+Notification.belongsTo(Room, {
+  as: 'room',
+  foreignKey: 'roomId',
+});
+
 function sync(...args) {
   return sequelize.sync(...args);
 }

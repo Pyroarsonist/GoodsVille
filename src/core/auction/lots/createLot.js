@@ -1,6 +1,6 @@
 import debugHandler from 'debug';
 import sequelize from 'data/sequelize';
-import { Room, Lot } from 'data/models';
+import { Room, Lot, Notification, NotificationToUser } from 'data/models';
 import moment from 'moment';
 
 const debug = debugHandler('goodsville:auction:lot:create');
@@ -29,6 +29,23 @@ async function createLot(
     },
     { transaction },
   );
+  const notification = await Notification.create(
+    {
+      level: 'success',
+      roomId: lot.room.id,
+      message: `You created lot #${lot.id} ${lot.name}!`,
+    },
+    { returning: true, transaction },
+  );
+
+  await NotificationToUser.create(
+    {
+      notificationId: notification.id,
+      userId: ownerId,
+    },
+    { transaction },
+  );
+
   debug('Created lot #%s, owner: %s', lot.id, ownerId);
   return lot;
 }

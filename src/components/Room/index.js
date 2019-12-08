@@ -8,14 +8,6 @@ import roomSubscription from './subscriptions/room.graphql';
 
 function Room({ id }) {
   let room;
-  const { loading, data, error } = useQuery(roomQuery, {
-    variables: { id },
-  });
-  // todo: add error view
-  if (error) return <p>Error view</p>;
-  if (loading) return <p>Loading ...</p>;
-
-  room = data.room;
 
   useSubscription(roomSubscription, {
     variables: { id },
@@ -27,6 +19,15 @@ function Room({ id }) {
     },
     shouldResubscribe: true,
   });
+
+  const { loading, data, error } = useQuery(roomQuery, {
+    variables: { id },
+  });
+  // todo: add error view
+  if (error) return <p>Error view</p>;
+  if (loading) return <p>Loading ...</p>;
+
+  room = data.room;
 
   return (
     <>

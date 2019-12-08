@@ -31,6 +31,7 @@ function LotCreation() {
     try {
       await create();
       history.push('/rooms');
+      window.location.href = '/rooms';
     } catch (e) {
       console.error(e);
       // todo: add visible error
@@ -76,6 +77,7 @@ function LotCreation() {
           <input
             className="form-control"
             type="number"
+            step="0.01"
             placeholder="Price"
             onChange={e => setPrice(e.target.value)}
           />
@@ -100,7 +102,7 @@ function LotCreation() {
               timeFormat="HH:mm"
               timeIntervals={15}
               timeCaption="time"
-              dateFormat="MMMM d, yyyy h:mm aa"
+              dateFormat="MMMM d, yyyy HH:mm"
             />
           </div>
         </div>

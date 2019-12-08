@@ -9,7 +9,7 @@ function RoomList() {
   // todo: add pagination
   const [limit /* setLimit */] = useState(10);
   const [offset /* setOffset */] = useState(0);
-  const { loading, data, error } = useQuery(roomListQuery, {
+  const { loading, data, error, refetch } = useQuery(roomListQuery, {
     variables: {
       input: {
         limit,
@@ -29,7 +29,7 @@ function RoomList() {
         <h4>Rooms count: {count}</h4>
         <div className="d-flex flex-wrap align-content-around mt-3">
           {rooms.map(room => (
-            <RoomItem room={room} key={room.id} />
+            <RoomItem room={room} key={room.id} refetch={refetch} />
           ))}
         </div>
         <PaginationBlock />

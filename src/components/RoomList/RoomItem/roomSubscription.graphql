@@ -1,0 +1,3 @@
+mutation roomSubscription($roomId: ID!, $involved: Boolean) {
+  roomSubscription(roomId: $roomId, involved: $involved)
+}

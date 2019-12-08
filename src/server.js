@@ -11,8 +11,9 @@ import ReactDOM from 'react-dom/server';
 import { getDataFromTree } from 'react-apollo';
 import PrettyError from 'pretty-error';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { SnackbarProvider } from 'notistack';
 import _ from 'lodash';
-import ApolloServer from './apollo';
+import ApolloServer, { getContextFromReq } from './apollo';
 import createApolloClient from './core/createApolloClient';
 import App from './components/App';
 import Html from './components/Html';
@@ -82,6 +83,7 @@ app.get('*', async (req, res, next) => {
     const apolloClient = createApolloClient({
       schema,
       rootValue: { request: req },
+      context: getContextFromReq(req, res),
     });
 
     // Universal HTTP client
@@ -137,9 +139,10 @@ app.get('*', async (req, res, next) => {
 
     const data = { ...route };
     const rootComponent = (
-      // todo: refactor provider
       <StyleContext.Provider value={{ insertCss }}>
-        <App context={context}>{route.component}</App>
+        <SnackbarProvider maxSnack={5} preventDuplicate>
+          <App context={context}>{route.component}</App>
+        </SnackbarProvider>
       </StyleContext.Provider>
     );
     await getDataFromTree(rootComponent);

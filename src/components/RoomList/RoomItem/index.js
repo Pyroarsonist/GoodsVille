@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { useMutation } from 'react-apollo';
 import moment from 'moment';
-import roomSubsciptionMutation from './roomSubsciption.graphql';
+import roomSubscriptionMutation from './roomSubscription.graphql';
 
-function RoomItem({ room }) {
-  const [roomSubsciption] = useMutation(roomSubsciptionMutation, {
+function RoomItem({ room, refetch }) {
+  const [roomSubscription] = useMutation(roomSubscriptionMutation, {
     variables: {
       roomId: room.id,
     },
@@ -15,7 +15,8 @@ function RoomItem({ room }) {
   const handleClick = async event => {
     event.preventDefault();
     try {
-      await roomSubsciption();
+      await roomSubscription();
+      await refetch();
     } catch (e) {
       console.error(e);
       // todo: add visible error
@@ -45,13 +46,23 @@ function RoomItem({ room }) {
               </small>
             </div>
             {/* todo: add button visibility */}
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-secondary"
-              onClick={handleClick}
-            >
-              Subscribe
-            </button>
+            {!room.userSubscribed && (
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={handleClick}
+              >
+                Subscribe
+              </button>
+            )}
+            {room.status !== 'open' && (
+              <Link
+                to={`/rooms/${room.id}`}
+                className="btn btn-sm btn-outline-secondary"
+              >
+                Room
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -60,14 +71,17 @@ function RoomItem({ room }) {
 }
 
 RoomItem.propTypes = {
+  refetch: PropTypes.func.isRequired,
   room: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     shortDescription: PropTypes.string.isRequired,
     startPrice: PropTypes.number.isRequired,
     currentPrice: PropTypes.number.isRequired,
     startedAt: PropTypes.string.isRequired,
     lot: PropTypes.shape().isRequired,
+    userSubscribed: PropTypes.bool.isRequired,
   }).isRequired,
 };
 

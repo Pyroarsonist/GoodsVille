@@ -1,6 +1,13 @@
 import debugHandler from 'debug';
 import sequelize from 'data/sequelize';
-import { Room, Lot, Bet, User } from 'data/models';
+import {
+  Room,
+  Lot,
+  Bet,
+  User,
+  NotificationToUser,
+  Notification,
+} from 'data/models';
 import moment from 'moment';
 import Decimal from 'decimal.js';
 
@@ -78,6 +85,23 @@ const closeLot = async (id, transaction) => {
   );
 
   await highestBet.update({ status: 'successful' }, { transaction });
+
+  const notification = await Notification.create(
+    {
+      level: 'success',
+      roomId: lot.room.id,
+      message: `You won lot #${lot.id} ${lot.name}! Congrats!`,
+    },
+    { returning: true, transaction },
+  );
+
+  await NotificationToUser.create(
+    {
+      notificationId: notification.id,
+      userId: highestBet.userId,
+    },
+    { transaction },
+  );
 
   debug(
     'Lot #%s closed successful, purchaser #%s give owner #%s %s money',
