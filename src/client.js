@@ -5,6 +5,7 @@ import deepForceUpdate from 'react-deep-force-update';
 import queryString from 'query-string';
 import cookie from 'react-cookies';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { SnackbarProvider } from 'notistack';
 import App from './components/App';
 import createFetch from './createFetch';
 import configureStore from './store/configureStore';
@@ -89,11 +90,18 @@ async function onLocationChange(location, action) {
     }
 
     const renderReactApp = isInitialRender ? ReactDOM.hydrate : ReactDOM.render;
-    appInstance = renderReactApp(
-      // todo: refactor provider
+
+    const rootComponent = (
       <StyleContext.Provider value={{ insertCss }}>
-        <App context={context}>{route.component}</App>
-      </StyleContext.Provider>,
+        <SnackbarProvider maxSnack={5} preventDuplicate>
+          <App context={context}>{route.component}</App>
+        </SnackbarProvider>
+      </StyleContext.Provider>
+    );
+
+    appInstance = renderReactApp(
+      rootComponent,
+
       container,
       () => {
         if (isInitialRender) {

@@ -3,6 +3,15 @@ import schema from 'data/schema';
 import { buildContext } from 'graphql-passport';
 import { ws, keepAlive } from 'config';
 
+export function getContextFromReq(req, res) {
+  return {
+    user: req.user,
+    getUser: () => req.user,
+    request: req,
+    response: res,
+  };
+}
+
 const server = new ApolloServer({
   schema,
   context: ({ req, res }) =>

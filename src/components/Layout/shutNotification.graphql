@@ -1,0 +1,8 @@
+mutation shutNotification($id: ID!) {
+  shutNotification(id: $id) {
+    id
+    message
+    level
+    createdAt
+  }
+}

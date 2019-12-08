@@ -1,0 +1,8 @@
+query notifications {
+  notifications {
+    id
+    message
+    level
+    createdAt
+  }
+}

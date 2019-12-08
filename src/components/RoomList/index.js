@@ -8,8 +8,6 @@ import roomListQuery from './roomList.graphql';
 const loadingView = <p>Loading ...</p>;
 
 function RoomList() {
-  // no ssr
-  if (!process.env.BROWSER) return loadingView;
   // todo: add pagination
   const [limit /* setLimit */] = useState(10);
   const [offset /* setOffset */] = useState(0);

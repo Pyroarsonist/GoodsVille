@@ -15,7 +15,7 @@ const Notification = Model.define(
     level: {
       type: DataType.STRING(16),
       allowNull: false,
-      defaultValue: 'info', // // could be info, warning, error or success
+      defaultValue: 'info', // could be info, warning, error or success
     },
     time: {
       type: DataType.INTEGER,
