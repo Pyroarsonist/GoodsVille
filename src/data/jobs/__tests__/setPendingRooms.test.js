@@ -1,4 +1,4 @@
-import { User, Room } from 'data/models';
+import { User, Room, Notification, NotificationToUser } from 'data/models';
 import createLot from 'core/auction/lots/createLot';
 import job from 'data/jobs/setPendingRooms';
 import randomize from 'crypto-random-string';
@@ -39,6 +39,18 @@ describe('setPendingRooms', () => {
     const room = await Room.getAllData(lot?.room?.id);
 
     if (room) {
+      const notifications = await Notification.findAll({
+        where: { roomId: room.id },
+      });
+
+      if (notifications.length) {
+        await NotificationToUser.destroy({
+          where: { notificationId: notifications.map(x => x.id) },
+        });
+        await Notification.destroy({
+          where: { id: notifications.map(x => x.id) },
+        });
+      }
       await room.destroy();
       await room.lot.destroy();
     }

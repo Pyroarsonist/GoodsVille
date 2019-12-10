@@ -1,4 +1,4 @@
-import { User, Room, Bet } from 'data/models';
+import { User, Room, Bet, Notification, NotificationToUser } from 'data/models';
 import createLot from 'core/auction/lots/createLot';
 import closeLot from 'core/auction/lots/closeLot';
 import createBet from 'core/auction/bets/createBet';
@@ -50,6 +50,19 @@ describe('createBet', () => {
     const room = await Room.getAllData(lot?.room?.id);
 
     if (room) {
+      const notifications = await Notification.findAll({
+        where: { roomId: room.id },
+      });
+
+      if (notifications.length) {
+        await NotificationToUser.destroy({
+          where: { notificationId: notifications.map(x => x.id) },
+        });
+        await Notification.destroy({
+          where: { id: notifications.map(x => x.id) },
+        });
+      }
+
       await room.destroy();
       await Bet.destroy({ where: { lotId: room.lot.id } });
       await room.lot.destroy();
