@@ -6,6 +6,18 @@
     "node": ">=6.13.1",
     "npm": ">=3.10.10"
   },
+  "author": {
+    "name": "Pyroarsonist",
+    "email": "velikiydan@gmail.com",
+    "url": "https://github.com/Pyroarsonist"
+  },
+  "contributors": [
+    {
+      "name": "valek2412",
+      "email": "valoleg99@gmail.com",
+      "url": "https://github.com/valek2412"
+    }
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
     "@fortawesome/fontawesome-free": "^5.11.2",
