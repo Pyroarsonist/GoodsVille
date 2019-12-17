@@ -37,9 +37,9 @@ function Login() {
 
   return (
     <div className={s.root}>
-      <div className={cx('mt-3', s.container)}>
+      <div className={cx('my-5 py-5', s.container)}>
         <form onSubmit={handleSubmit}>
-          <h1 className="mb-3">Log in</h1>
+          <h1 className="mb-4">Log in</h1>
           <div className={s.formGroup}>
             <div className={s.label}>
               Email address:
@@ -52,7 +52,7 @@ function Login() {
               />
             </div>
           </div>
-          <div className={s.formGroup}>
+          <div className={cx(s.formGroup, 'mt-1')}>
             <div className={s.label}>
               Password:
               <input
@@ -65,7 +65,7 @@ function Login() {
             </div>
           </div>
           <div className={s.formGroup}>
-            <button className={s.button} type="submit">
+            <button className={cx(s.button, 'mt-5')} type="submit">
               Log in
             </button>
           </div>
