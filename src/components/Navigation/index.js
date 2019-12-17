@@ -8,8 +8,6 @@ import s from './index.css';
 import logoutMutation from './logout.graphql';
 import Link from '../Link';
 
-// todo: user.balance undefined
-
 function Navigation(props, { user }) {
   const [logout] = useMutation(logoutMutation);
   const { enqueueSnackbar } = useSnackbar();
@@ -47,7 +45,7 @@ function Navigation(props, { user }) {
           >
             Logout
           </button>
-          <span className={cx(s.balance, 'ml-3')}>{`$${user.balance}`}</span>
+          <span className={cx(s.balance, 'ml-3')}>{`¤${user.balance}`}</span>
         </>
       ) : (
         <>

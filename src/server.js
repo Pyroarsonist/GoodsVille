@@ -96,7 +96,7 @@ app.get('*', async (req, res, next) => {
 
     const initialState = {
       user: req.user
-        ? _.pick(req.user, ['id', 'email', 'fullName', 'nickName'])
+        ? _.pick(req.user, ['id', 'email', 'fullName', 'nickName', 'balance'])
         : null,
     };
 

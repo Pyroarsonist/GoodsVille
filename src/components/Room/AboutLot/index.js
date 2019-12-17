@@ -38,7 +38,7 @@ function AboutLot({ room }) {
           <tbody>
             {lot.bets.map(bet => (
               <tr key={bet.id}>
-                <td>{bet.price}</td>
+                <td>¤{bet.price}</td>
                 <td>{bet.owner?.nickName}</td>
               </tr>
             ))}

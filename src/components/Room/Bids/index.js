@@ -48,12 +48,12 @@ function Bids({ room }) {
       <div className="row justify-content-around pt-5">
         <div className="d-flex flex-column">
           <div>Start price:</div>
-          <div>{lot.startPrice}</div>
+          <div>¤{lot.startPrice}</div>
         </div>
 
         <div className="d-flex flex-column">
           <div>Current price:</div>
-          <div>{lot.currentPrice}</div>
+          <div>¤{lot.currentPrice}</div>
         </div>
       </div>
 

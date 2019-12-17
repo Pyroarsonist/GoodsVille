@@ -58,10 +58,10 @@ function RoomItem({ room, refetch }, { user }) {
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <small className="text-muted">
-                Start price: {room.lot.startPrice}
+                Start price: ¤{room.lot.startPrice}
               </small>
               <small className="text-muted">
-                Current price: {room.lot.currentPrice}
+                Current price: ¤{room.lot.currentPrice}
               </small>
               {room.status === 'closed' ? (
                 <small className="text-muted">
