@@ -27,6 +27,11 @@ const routes = {
       load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
     },
     {
+      path: '/account',
+      load: () => import(/* webpackChunkName: 'account' */ './account'),
+      children: [],
+    },
+    {
       path: '/rooms',
       load: () => import(/* webpackChunkName: 'rooms' */ './rooms'),
       children: [],

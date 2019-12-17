@@ -1,0 +1,3 @@
+mutation user($nickName: String, $fullName: String) {
+  user(nickName: $nickName, fullName: $fullName)
+}
