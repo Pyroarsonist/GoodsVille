@@ -1,7 +1,10 @@
 import React from 'react';
 import history from 'core/history';
+import { useQuery } from 'react-apollo';
+import countsQuery from './getCounts.graphql';
 
 function Home() {
+  const { data } = useQuery(countsQuery);
   return (
     <div className="jumbotron jumbotron-fluid h-100 mb-0">
       <div className="container">
@@ -25,15 +28,15 @@ function Home() {
         <div className="d-flex justify-content-between align-items-center my-5 px-5">
           <div className="d-flex flex-column text-center">
             <h4>Users</h4>
-            <h4>228</h4>
+            <h4>{data?.userCount || 0}</h4>
           </div>
           <div className="d-flex flex-column text-center">
             <h4>Lots</h4>
-            <h4>1488</h4>
+            <h4>{data?.lotCount || 0}</h4>
           </div>
           <div className="d-flex flex-column text-center">
             <h4>Bids</h4>
-            <h4>13337</h4>
+            <h4>{data?.betCount || 0}</h4>
           </div>
         </div>
         <p className="lead">
@@ -44,7 +47,7 @@ function Home() {
               history.push('/rooms');
             }}
           >
-            Start
+            Explore
           </button>
         </p>
       </div>
