@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useMutation } from 'react-apollo';
-import history from 'core/history';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation } from 'react-apollo';
 import { useSnackbar } from 'notistack';
 import editUserMutation from './editUser.graphql';
+import meQuery from './me.graphql';
 
-function Account(props, { user }) {
-  const [fullName, setFullName] = useState(user.fullName);
-  const [nickName, setNickName] = useState(user.nickName);
+function Account() {
+  const { data, refetch } = useQuery(meQuery);
+  const user = data?.me;
+  const [fullName, setFullName] = useState(user?.fullName);
+  const [nickName, setNickName] = useState(user?.nickName);
+
+  useEffect(() => {
+    setFullName(user?.fullName);
+    setNickName(user?.nickName);
+  }, [data]);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -24,7 +31,7 @@ function Account(props, { user }) {
     try {
       await change();
       setIsEdit(false);
-      history.push('/account');
+      await refetch();
     } catch (e) {
       console.error(e);
       enqueueSnackbar('Error', {
@@ -68,7 +75,7 @@ function Account(props, { user }) {
 
         <div className="d-flex my-3">
           <h3 className="mr-2">Email</h3>
-          <h3>{user.email}</h3>
+          <h3>{user?.email}</h3>
         </div>
 
         <hr className="my-2" />
@@ -95,21 +102,21 @@ function Account(props, { user }) {
 
       <div className="d-flex my-3">
         <h3 className="mr-2">Full Name: </h3>
-        <h3>{user.fullName}</h3>
+        <h3>{user?.fullName}</h3>
       </div>
 
       <hr className="my-2" />
 
       <div className="d-flex my-3">
         <h3 className="mr-2">Nick Name: </h3>
-        <h3>{user.nickName}</h3>
+        <h3>{user?.nickName}</h3>
       </div>
 
       <hr className="my-2" />
 
       <div className="d-flex my-3">
         <h3 className="mr-2">Email: </h3>
-        <h3>{user.email}</h3>
+        <h3>{user?.email}</h3>
       </div>
 
       <hr className="my-2" />
@@ -124,12 +131,5 @@ function Account(props, { user }) {
     </div>
   );
 }
-Account.contextTypes = {
-  user: PropTypes.shape({
-    fullName: PropTypes.string,
-    nickName: PropTypes.string,
-    email: PropTypes.string.isRequired,
-  }),
-};
 
 export default Account;

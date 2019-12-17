@@ -5,6 +5,8 @@ export const schema = [
     id: ID!
     email: String!
     nickName: String
+    fullName: String
+    balance: Float
   }
 `,
 ];
