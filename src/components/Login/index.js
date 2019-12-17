@@ -3,6 +3,7 @@ import { useMutation } from 'react-apollo';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import history from 'core/history';
 import cx from 'classnames';
+import { useSnackbar } from 'notistack';
 import loginMutation from './login.graphql';
 import s from './Login.css';
 
@@ -10,6 +11,8 @@ function Login() {
   const [errorOccured, setErrorOcurred] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [login] = useMutation(loginMutation, {
     variables: {
@@ -31,15 +34,17 @@ function Login() {
     } catch (e) {
       setErrorOcurred(true);
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Invalid login or password', {
+        variant: 'error',
+      });
     }
   };
 
   return (
     <div className={s.root}>
-      <div className={cx('mt-3', s.container)}>
+      <div className={cx('my-5 py-5', s.container)}>
         <form onSubmit={handleSubmit}>
-          <h1 className="mb-3">Log in</h1>
+          <h1 className="mb-4">Log in</h1>
           <div className={s.formGroup}>
             <div className={s.label}>
               Email address:
@@ -52,7 +57,7 @@ function Login() {
               />
             </div>
           </div>
-          <div className={s.formGroup}>
+          <div className={cx(s.formGroup, 'mt-1')}>
             <div className={s.label}>
               Password:
               <input
@@ -65,7 +70,7 @@ function Login() {
             </div>
           </div>
           <div className={s.formGroup}>
-            <button className={s.button} type="submit">
+            <button className={cx(s.button, 'mt-5')} type="submit">
               Log in
             </button>
           </div>

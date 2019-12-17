@@ -1,19 +1,25 @@
 import { User } from 'data/models';
+import _ from 'lodash';
 
-export const queries = [
+export const mutation = [
   `
-  me: User
+    user(nickName: String, fullName: String, balance: Float): String!
 `,
 ];
 
 export const resolvers = {
-  RootQuery: {
-    async me(root, args, context) {
+  Mutation: {
+    async user(root, args, context) {
       const userId = context?.getUser?.()?.id;
       if (!userId) throw new Error('User not logged in');
       const user = await User.findByPk(userId);
       if (!user) throw new Error('Such user not exists');
-      return user;
+
+      _.forEach(args, (val, key) => {
+        user[key] = val;
+      });
+      await user.save();
+      return 'ok';
     },
   },
 };

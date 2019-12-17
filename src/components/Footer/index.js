@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import s from './Footer.css';
+import s from './index.css';
 import Link from '../Link';
 
 function Footer() {

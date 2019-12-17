@@ -44,3 +44,9 @@
 .spacer {
   color: rgba(255, 255, 255, 0.3);
 }
+
+.balance {
+  color: #0f0;
+  font-size: 16pt;
+  font-weight: bold;
+}

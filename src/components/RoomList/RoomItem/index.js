@@ -2,15 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { useMutation } from 'react-apollo';
+import cx from 'classnames';
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import roomSubscriptionMutation from './roomSubscription.graphql';
 
-function RoomItem({ room, refetch }) {
+const styleStatusResolver = status => {
+  const dict = {
+    open: 'bg-white',
+    pending: 'bg-warning',
+    closed: 'bg-info',
+  };
+  return dict[status];
+};
+
+function RoomItem({ room, refetch }, { user }) {
   const [roomSubscription] = useMutation(roomSubscriptionMutation, {
     variables: {
       roomId: room.id,
     },
   });
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = async event => {
     event.preventDefault();
@@ -19,14 +32,23 @@ function RoomItem({ room, refetch }) {
       await refetch();
     } catch (e) {
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Not enough money', {
+        variant: 'error',
+      });
     }
   };
+
+  const subVisibility = !!(
+    user &&
+    !room.userSubscribed &&
+    room.status === 'open'
+  );
+  const roomVisibility = room.status !== 'open';
 
   return (
     <div className="col-md-4 col-sm-6 col-xs-12">
       <div className="card mb-4 shadow-sm">
-        <div className="card-header">
+        <div className={cx('card-header', styleStatusResolver(room.status))}>
           <Link to={`/rooms/${room.id}`} className="card-title text-center">
             {room.lot.name}
           </Link>
@@ -36,17 +58,22 @@ function RoomItem({ room, refetch }) {
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <small className="text-muted">
-                Start price: {room.lot.startPrice}
+                Start price: ¤{room.lot.startPrice}
               </small>
               <small className="text-muted">
-                Current price: {room.lot.currentPrice}
+                Current price: ¤{room.lot.currentPrice}
               </small>
-              <small className="text-muted">
-                Started at: {moment(room.startedAt).fromNow()}
-              </small>
+              {room.status === 'closed' ? (
+                <small className="text-muted">
+                  Ended at: {moment(room.endedAt).fromNow()}
+                </small>
+              ) : (
+                <small className="text-muted">
+                  Started at: {moment(room.startedAt).fromNow()}
+                </small>
+              )}
             </div>
-            {/* todo: add button visibility */}
-            {!room.userSubscribed && (
+            {subVisibility && (
               <button
                 type="button"
                 className="btn btn-sm btn-outline-secondary"
@@ -55,7 +82,7 @@ function RoomItem({ room, refetch }) {
                 Subscribe
               </button>
             )}
-            {room.status !== 'open' && (
+            {roomVisibility && (
               <Link
                 to={`/rooms/${room.id}`}
                 className="btn btn-sm btn-outline-secondary"
@@ -80,9 +107,14 @@ RoomItem.propTypes = {
     startPrice: PropTypes.number.isRequired,
     currentPrice: PropTypes.number.isRequired,
     startedAt: PropTypes.string.isRequired,
+    endedAt: PropTypes.string.isRequired,
     lot: PropTypes.shape().isRequired,
     userSubscribed: PropTypes.bool.isRequired,
   }).isRequired,
+};
+
+RoomItem.contextTypes = {
+  user: PropTypes.shape(),
 };
 
 export default RoomItem;

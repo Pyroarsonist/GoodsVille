@@ -1,15 +1,14 @@
 import React from 'react';
 import Layout from 'components/Layout';
-import Privacy from 'components/Privacy';
-import privacy from './privacy.md';
+import Account from 'components/Account';
 
 function action() {
   return {
-    chunks: ['privacy'],
-    title: privacy.title,
+    chunks: ['account'],
+    title: 'Account page',
     component: (
       <Layout>
-        <Privacy />
+        <Account />
       </Layout>
     ),
   };
