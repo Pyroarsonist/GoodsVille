@@ -9,10 +9,12 @@ function Account() {
   const user = data?.me;
   const [fullName, setFullName] = useState(user?.fullName);
   const [nickName, setNickName] = useState(user?.nickName);
+  const [balance, setBalance] = useState(user?.balance);
 
   useEffect(() => {
     setFullName(user?.fullName);
     setNickName(user?.nickName);
+    setBalance(user?.balance);
   }, [data]);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -23,6 +25,7 @@ function Account() {
     variables: {
       nickName,
       fullName,
+      balance: parseFloat(balance),
     },
   });
 
@@ -80,6 +83,19 @@ function Account() {
 
         <hr className="my-2" />
 
+        <div className="d-flex my-3 form-group">
+          <h3 className="mr-2">Balance</h3>
+          <input
+            className="form-control"
+            type="number"
+            placeholder="Balance"
+            value={balance}
+            onChange={e => setBalance(e.target.value)}
+          />
+        </div>
+
+        <hr className="my-2" />
+
         <div className="d-flex my-3">
           <button type="submit" className="btn btn-lg btn-success mr-2">
             Accept
@@ -121,6 +137,12 @@ function Account() {
 
       <hr className="my-2" />
 
+      <div className="d-flex my-3">
+        <h3 className="mr-2">Balance: </h3>
+        <h3>{user?.balance}</h3>
+      </div>
+
+      <hr className="my-2" />
       <button
         type="button"
         className="btn btn-lg btn-primary mt-3"

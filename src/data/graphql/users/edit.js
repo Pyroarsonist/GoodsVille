@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 export const mutation = [
   `
-    user(nickName: String, fullName: String): String!
+    user(nickName: String, fullName: String, balance: Float): String!
 `,
 ];
 
