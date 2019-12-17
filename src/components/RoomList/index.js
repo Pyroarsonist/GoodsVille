@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import cx from 'classnames';
 import RoomItem from './RoomItem';
-import SearchBar from './SearchBar';
 import roomListQuery from './roomList.graphql';
 
 function RoomList() {
@@ -36,7 +35,9 @@ function RoomList() {
 
   return (
     <>
-      <SearchBar />
+      <nav className="navbar navbar-light bg-light">
+        <h1 className="ml-5 pl-5">Rooms</h1>
+      </nav>
       <div className="container">
         <h4 className="mt-2 row">Total count: {count}</h4>
         <div className="d-flex flex-wrap align-content-around mt-3">
