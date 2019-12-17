@@ -11,15 +11,8 @@ function Navigation(props, { user }) {
   const [logout] = useMutation(logoutMutation);
   return (
     <div className={s.root} role="navigation">
-      <Link className={s.link} to="/about">
-        About
-      </Link>
-      <Link className={s.link} to="/contact">
-        Contact
-      </Link>
       {user && (
         <>
-          <span className={s.spacer}> | </span>
           <Link className={s.link} to="/createLot">
             <button className="btn btn-info" type="button">
               Create lot
@@ -27,7 +20,6 @@ function Navigation(props, { user }) {
           </Link>
         </>
       )}
-      <span className={s.spacer}> | </span>
       {user ? (
         <>
           <Link className={s.link} to="/account">
@@ -40,7 +32,7 @@ function Navigation(props, { user }) {
             onClick={async () => {
               try {
                 await logout();
-                window.location.href = '/';
+                window.location.href = '/rooms';
               } catch (e) {
                 console.error(e);
                 // todo: add error
