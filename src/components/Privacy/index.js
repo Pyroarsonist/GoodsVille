@@ -2,10 +2,7 @@ import React from 'react';
 
 function Privacy() {
   return (
-    <div
-      className="jumbotron jumbotron-fluid h-100"
-      style={{ marginBottom: -32 }}
-    >
+    <div className="jumbotron jumbotron-fluid h-100 mb-0">
       <div className="container mb-5">
         <h1 className="display-4 mt-2">Privacy</h1>
         <hr className="my-5" />

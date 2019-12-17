@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from 'components/Layout';
-import Account from '../../components/Account';
+import Account from 'components/Account';
 
 function action() {
   return {

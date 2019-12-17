@@ -1,12 +1,9 @@
 import React from 'react';
-import history from '../../core/history';
+import history from 'core/history';
 
 function Home() {
   return (
-    <div
-      className="jumbotron jumbotron-fluid h-100"
-      style={{ marginBottom: -32 }}
-    >
+    <div className="jumbotron jumbotron-fluid h-100 mb-0">
       <div className="container">
         <h1 className="display-4">GoodsVille</h1>
         <p className="lead">
@@ -45,7 +42,6 @@ function Home() {
             type="button"
             onClick={() => {
               history.push('/rooms');
-              window.location.href = '/rooms';
             }}
           >
             Start

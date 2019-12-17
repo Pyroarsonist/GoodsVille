@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
-import history from '../../core/history';
+import history from 'core/history';
 import editUserMutation from './editUser.graphql';
 
 function Account(props, { user }) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import Layout from '../../components/Layout';
+import Layout from 'components/Layout';
+import Privacy from 'components/Privacy';
 import privacy from './privacy.md';
-import Privacy from '../../components/Privacy';
 
 function action() {
   return {
