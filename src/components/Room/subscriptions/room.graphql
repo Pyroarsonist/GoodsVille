@@ -1,0 +1,35 @@
+subscription room($id: ID!) {
+  room(id: $id) {
+    id
+    status
+    lot {
+      id
+      description
+      shortDescription
+      name
+      startPrice
+      currentPrice
+      tag
+      owner {
+        id
+        nickName
+      }
+      purchaser {
+        id
+        nickName
+      }
+      bets {
+        id
+        price
+        status
+        owner {
+          id
+          nickName
+        }
+      }
+    }
+    startedAt
+    endedAt
+    supposedEndsAt
+  }
+}

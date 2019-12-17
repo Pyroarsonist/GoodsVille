@@ -1,0 +1,3 @@
+mutation bet($input: BetCreation!) {
+  bet(input: $input)
+}

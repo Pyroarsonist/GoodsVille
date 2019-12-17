@@ -1,0 +1,10 @@
+{
+  "icons": [
+    {
+      "src": "icon.jpg",
+      "sizes": "192x158",
+      "type": "image/jpg"
+    }
+  ],
+  "start_url": "/"
+}
