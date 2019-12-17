@@ -31,7 +31,11 @@ const createBet = async ({ price: _price, lotId, userId }, transaction) => {
   if (!lot) throw new Error('Lot not found');
 
   if (lot.room.status !== 'pending') {
-    if (lot.room.status === 'closed') throw new Error('Auction ended');
+    if (
+      moment().isAfter(lot.room.supposedEndsAt) ||
+      lot.room.status === 'closed'
+    )
+      throw new Error('Auction ended');
     if (lot.room.status === 'open')
       throw new Error('Auction is not started yet');
     throw new Error('Invalid auction status');

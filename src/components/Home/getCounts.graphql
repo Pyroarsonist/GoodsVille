@@ -1,0 +1,5 @@
+query getCounts {
+  userCount
+  lotCount
+  betCount
+}

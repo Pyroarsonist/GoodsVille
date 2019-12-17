@@ -40,7 +40,7 @@ function Account(props, { user }) {
       <hr className="my-5" />
 
       <form onSubmit={handleSubmit}>
-        <div className="d-flex my-3">
+        <div className="d-flex my-3 form-group">
           <h3 className="mr-2">Full Name</h3>
           <input
             className="form-control"
@@ -74,7 +74,7 @@ function Account(props, { user }) {
         <hr className="my-2" />
 
         <div className="d-flex my-3">
-          <button type="submit" className="btn btn-lg btn-success">
+          <button type="submit" className="btn btn-lg btn-success mr-2">
             Accept
           </button>
           <button

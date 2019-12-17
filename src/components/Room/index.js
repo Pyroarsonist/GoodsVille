@@ -30,11 +30,12 @@ function Room({ id }) {
   room = data.room;
 
   return (
-    <>
+    <div className="container-fluid">
       <h1>Room #{room.id}</h1>
-      <Bids lot={room.lot} supposedEndsAt={room.supposedEndsAt} />
-      <AboutLot lot={room.lot} owner={room.lot.owner} />
-    </>
+      <h3>Status: {room.status}</h3>
+      <Bids room={room} />
+      <AboutLot room={room} />
+    </div>
   );
 }
 
