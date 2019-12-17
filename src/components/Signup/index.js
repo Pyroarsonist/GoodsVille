@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
 import history from 'core/history';
+import { useSnackbar } from 'notistack';
 import s from './Signup.css';
 import signupMutation from './signup.graphql';
 
@@ -13,6 +14,8 @@ function Signup() {
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordDuplicate, setPasswordDuplicate] = useState('');
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [signup] = useMutation(signupMutation, {
     variables: {
@@ -31,7 +34,9 @@ function Signup() {
       window.location.href = '/rooms';
     } catch (e) {
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Error', {
+        variant: 'error',
+      });
     }
   };
 

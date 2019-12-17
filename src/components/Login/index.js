@@ -3,6 +3,7 @@ import { useMutation } from 'react-apollo';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import history from 'core/history';
 import cx from 'classnames';
+import { useSnackbar } from 'notistack';
 import loginMutation from './login.graphql';
 import s from './Login.css';
 
@@ -10,6 +11,8 @@ function Login() {
   const [errorOccured, setErrorOcurred] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [login] = useMutation(loginMutation, {
     variables: {
@@ -31,7 +34,9 @@ function Login() {
     } catch (e) {
       setErrorOcurred(true);
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Invalid login or password', {
+        variant: 'error',
+      });
     }
   };
 

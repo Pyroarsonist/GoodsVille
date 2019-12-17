@@ -3,10 +3,13 @@ import { useMutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import humanizeDuration from 'humanize-duration';
+import { useSnackbar } from 'notistack';
 import betMutation from '../mutations/bet.graphql';
 
 function Bids({ lot, supposedEndsAt }) {
   const [timeLeft, setTimeLeft] = useState(-moment().diff(supposedEndsAt));
+
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,6 +34,9 @@ function Bids({ lot, supposedEndsAt }) {
       await bet();
     } catch (e) {
       console.error(e);
+      enqueueSnackbar('Not enough money', {
+        variant: 'error',
+      });
     }
   };
 

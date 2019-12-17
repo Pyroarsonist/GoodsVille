@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'components/Link';
 import { useMutation } from 'react-apollo';
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import roomSubscriptionMutation from './roomSubscription.graphql';
 
 function RoomItem({ room, refetch }) {
@@ -12,6 +13,8 @@ function RoomItem({ room, refetch }) {
     },
   });
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleClick = async event => {
     event.preventDefault();
     try {
@@ -19,7 +22,9 @@ function RoomItem({ room, refetch }) {
       await refetch();
     } catch (e) {
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Not enough money', {
+        variant: 'error',
+      });
     }
   };
 

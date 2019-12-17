@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import history from 'core/history';
 import DatePicker from 'react-datepicker';
+import { useSnackbar } from 'notistack';
 import lotCreationMutation from './createLot.graphql';
 
 function LotCreation() {
@@ -12,6 +13,8 @@ function LotCreation() {
   const [price, setPrice] = useState('');
   const [tag, setTag] = useState('');
   const [startedAt, setStartedAt] = useState(new Date());
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [create] = useMutation(lotCreationMutation, {
     variables: {
@@ -34,7 +37,9 @@ function LotCreation() {
       window.location.href = '/rooms';
     } catch (e) {
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Error', {
+        variant: 'error',
+      });
     }
   };
 

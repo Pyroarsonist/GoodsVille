@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
 import history from 'core/history';
+import { useSnackbar } from 'notistack';
 import editUserMutation from './editUser.graphql';
 
 function Account(props, { user }) {
   const [fullName, setFullName] = useState(user.fullName);
   const [nickName, setNickName] = useState(user.nickName);
   const [isEdit, setIsEdit] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [change] = useMutation(editUserMutation, {
     variables: {
@@ -24,7 +27,9 @@ function Account(props, { user }) {
       history.push('/account');
     } catch (e) {
       console.error(e);
-      // todo: add visible error
+      enqueueSnackbar('Error', {
+        variant: 'error',
+      });
     }
   };
 
