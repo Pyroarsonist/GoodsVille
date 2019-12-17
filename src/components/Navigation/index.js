@@ -3,12 +3,16 @@ import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
+import { useSnackbar } from 'notistack';
 import s from './index.css';
 import logoutMutation from './logout.graphql';
 import Link from '../Link';
 
+// todo: user.balance undefined
+
 function Navigation(props, { user }) {
   const [logout] = useMutation(logoutMutation);
+  const { enqueueSnackbar } = useSnackbar();
   return (
     <div className={s.root} role="navigation">
       {user && (
@@ -35,12 +39,15 @@ function Navigation(props, { user }) {
                 window.location.href = '/rooms';
               } catch (e) {
                 console.error(e);
-                // todo: add error
+                enqueueSnackbar('Error', {
+                  variant: 'error',
+                });
               }
             }}
           >
             Logout
           </button>
+          <span className={cx(s.balance, 'ml-3')}>{`$${user.balance}`}</span>
         </>
       ) : (
         <>
