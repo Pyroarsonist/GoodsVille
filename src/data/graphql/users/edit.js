@@ -15,7 +15,8 @@ export const resolvers = {
       const user = await User.findByPk(userId);
       if (!user) throw new Error('Such user not exists');
 
-      _.forEach(args, (key, val) => {
+      // todo: use me query
+      _.forEach(args, (val, key) => {
         user[key] = val;
       });
       await user.save();

@@ -5,7 +5,9 @@ import moment from 'moment';
 import humanizeDuration from 'humanize-duration';
 import betMutation from '../mutations/bet.graphql';
 
-function Bids({ lot, supposedEndsAt }) {
+function Bids({ room }) {
+  const { supposedEndsAt, lot, status, endedAt, startsAt } = room;
+  const isClosed = moment().isAfter(supposedEndsAt) || status === 'closed';
   const [timeLeft, setTimeLeft] = useState(-moment().diff(supposedEndsAt));
 
   useEffect(() => {
@@ -29,8 +31,10 @@ function Bids({ lot, supposedEndsAt }) {
     event.preventDefault();
     try {
       await bet();
+      setPrice('0');
     } catch (e) {
       console.error(e);
+      // todo: add visible error
     }
   };
 
@@ -48,41 +52,74 @@ function Bids({ lot, supposedEndsAt }) {
         </div>
       </div>
 
-      <div className="row justify-content-center mt-5 mb-5">
-        <div className="d-flex flex-column">
-          <div>Timer:</div>
-          <div>{humanizeDuration(timeLeft, { round: true })}</div>
-        </div>
-      </div>
-
-      <div className="row justify-content-center mt-5 mb-5">
-        <form className="form-inline" onSubmit={handleSubmit}>
+      {isClosed ? (
+        <div className="row justify-content-center mt-5 mb-5 pb-2">
           <div className="d-flex flex-column">
-            <input
-              className="form-control"
-              type="number"
-              placeholder="Price"
-              aria-label="bid"
-              value={price}
-              onChange={e => setPrice(e.target.value)}
-            />
-            <button className="btn btn-outline-success mt-2" type="submit">
-              Bid
-            </button>
+            <div>Ended at: {moment(endedAt).fromNow()}</div>
           </div>
-        </form>
-      </div>
+        </div>
+      ) : (
+        <div className="pb-2">
+          <div className="row justify-content-center mt-5 mb-5">
+            <div className="d-flex flex-column">
+              {status === 'pending' ? (
+                <>
+                  <div>Timer:</div>
+                  <div>{humanizeDuration(timeLeft, { round: true })}</div>
+                </>
+              ) : (
+                <>
+                  <div>Starting in:</div>
+                  <div>
+                    {humanizeDuration(-moment().diff(startsAt), {
+                      round: true,
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+          {status === 'pending' && (
+            <div className="row justify-content-center mt-5 mb-5">
+              <form className="form-inline" onSubmit={handleSubmit}>
+                <div className="d-flex flex-column">
+                  <input
+                    className="form-control"
+                    type="number"
+                    placeholder="Price"
+                    aria-label="bid"
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
+                  />
+                  <button
+                    className="btn btn-outline-success mt-2"
+                    type="submit"
+                  >
+                    Bid
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
 Bids.propTypes = {
-  lot: PropTypes.shape({
+  room: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    startPrice: PropTypes.number.isRequired,
-    currentPrice: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    supposedEndsAt: PropTypes.string.isRequired,
+    endedAt: PropTypes.string,
+    startsAt: PropTypes.string.isRequired,
+    lot: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      startPrice: PropTypes.number.isRequired,
+      currentPrice: PropTypes.number.isRequired,
+    }),
   }).isRequired,
-  supposedEndsAt: PropTypes.string.isRequired,
 };
 
 export default Bids;
