@@ -29,10 +29,12 @@ function Account(props, { user }) {
   };
 
   return isEdit ? (
-    <div className="container">
+    <div className="container m-5">
       <h1>Edit Account</h1>
 
-      <form onSubmit={handleSubmit} className="p-5">
+      <hr className="my-5" />
+
+      <form onSubmit={handleSubmit}>
         <div className="d-flex my-3">
           <h3 className="mr-2">Full Name</h3>
           <input
@@ -43,6 +45,8 @@ function Account(props, { user }) {
             onChange={e => setFullName(e.target.value)}
           />
         </div>
+
+        <hr className="my-2" />
 
         <div className="d-flex my-3">
           <h3 className="mr-2">Nick Name</h3>
@@ -55,47 +59,59 @@ function Account(props, { user }) {
           />
         </div>
 
+        <hr className="my-2" />
+
         <div className="d-flex my-3">
           <h3 className="mr-2">Email</h3>
           <h3>{user.email}</h3>
         </div>
-      </form>
 
-      <div className="d-flex my-3">
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={handleSubmit}
-        >
-          Accept
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => setIsEdit(false)}
-        >
-          Cancel
-        </button>
-      </div>
+        <hr className="my-2" />
+
+        <div className="d-flex my-3">
+          <button type="submit" className="btn btn-lg btn-success">
+            Accept
+          </button>
+          <button
+            type="button"
+            className="btn btn-lg btn-secondary"
+            onClick={() => setIsEdit(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   ) : (
-    <div className="container">
+    <div className="container m-5">
       <h1>Account</h1>
+
+      <hr className="my-5" />
+
       <div className="d-flex my-3">
-        <h3 className="mr-2">Full Name</h3>
+        <h3 className="mr-2">Full Name: </h3>
         <h3>{user.fullName}</h3>
       </div>
+
+      <hr className="my-2" />
+
       <div className="d-flex my-3">
-        <h3 className="mr-2">Nick Name</h3>
+        <h3 className="mr-2">Nick Name: </h3>
         <h3>{user.nickName}</h3>
       </div>
+
+      <hr className="my-2" />
+
       <div className="d-flex my-3">
-        <h3 className="mr-2">Email</h3>
+        <h3 className="mr-2">Email: </h3>
         <h3>{user.email}</h3>
       </div>
+
+      <hr className="my-2" />
+
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-lg btn-primary mt-3"
         onClick={() => setIsEdit(true)}
       >
         Edit
