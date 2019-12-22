@@ -23,7 +23,7 @@ Specifications of production server:
 |         200         |   58.5%   |  182.9 mb   |
 |         300         |   58.7%   |  160.0 mb   |
 
-####After 100 requests/sec the server has stopped functioning properly.
+##### After 100 requests/sec the server has stopped functioning properly.
 
 Horizontal scaling for current architecture is not possible.
 Refactor scheduler mechanism and make application stateless needed.
