@@ -1,6 +1,6 @@
 {
   "name": "goodsville",
-  "version": "0.0.2a",
+  "version": "0.0.2b",
   "license": "MIT",
   "engines": {
     "node": ">=6.13.1",
