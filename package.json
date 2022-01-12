@@ -135,7 +135,7 @@
     "jest-transform-graphql": "^2.1.0",
     "jscodeshift": "^0.6.4",
     "lint-staged": "^9.4.2",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.3.2",
     "mkdirp": "^0.5.1",
     "null-loader": "^3.0.0",
     "opn-cli": "^5.0.0",
